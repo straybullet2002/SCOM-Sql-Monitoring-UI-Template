@@ -1,0 +1,33 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Categories>
+    <Category ID="Test.SqlMonitor.MP.Category.Assembly.UI"
+              Target="Test.SqlMonitor.MP.Assembly.UI"
+              Value="Visualization!Microsoft.SystemCenter.Visualization.WindowsAssembly" />
+  </Categories>
+  <PresentationTypes>
+    <UIPages>
+
+      <UIPage ID="Test.SqlMonitor.MP.UIPage.OleDbQuery.ConstructQuery" Accessibility="Public">
+        <Implementation>
+          <Assembly>Test.SqlMonitor.MP.Assembly.UI</Assembly>
+          <Type>Test.SqlMonitor.UI.Pages.OleDbQuery.ConstructQuery</Type>
+        </Implementation>
+      </UIPage>
+      
+      <UIPage ID="Test.SqlMonitor.MP.UIPage.Knowledge.KnowledgeForType" Accessibility="Public">
+        <Implementation>
+          <Assembly>Test.SqlMonitor.MP.Assembly.UI</Assembly>
+          <Type>Test.SqlMonitor.UI.Pages.Knowledge.KnowledgeForType</Type>
+        </Implementation>
+      </UIPage>      
+
+    </UIPages>
+  </PresentationTypes>
+  <Resources>
+    <Assembly ID="Test.SqlMonitor.MP.Assembly.UI"
+              Accessibility="Public"
+              QualifiedName="Test.SqlMonitor.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=54f0800cf53d6f2d"
+              FileName="Test.SqlMonitor.UI.dll"
+              HasNullStream="false"/>
+  </Resources>
+</ManagementPackFragment>

@@ -1,0 +1,54 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Presentation>
+    <Folders>
+
+      <Folder ID="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Monitors"
+              Accessibility="Internal"
+              ParentFolder="SC!Microsoft.SystemCenter.Authoring.MonitorTypeFolder.Root"/>
+
+      <Folder ID="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Rules.Performance"
+              Accessibility="Public"
+              ParentFolder="MSR!Microsoft.SystemCenter.RuleTemplates.Folder.Collection" />      
+      <Folder ID="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Rules.Alert"
+              Accessibility="Public"
+              ParentFolder="MSR!Microsoft.SystemCenter.RuleTemplates.Folder.Alert" />    
+
+    </Folders>
+    
+    <FolderItems>
+
+      <FolderItem ID="Test.SqlMonitor.MP.FolderItem.UnitMonitorType.DatabaseOleDBQuery.TwoState"
+                  ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState"
+                  Folder="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Monitors"/>
+      <FolderItem ID="Test.SqlMonitor.MP.FolderItem.UnitMonitorType.DatabaseOleDBQuery.ThreeState"
+                  ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState"
+                  Folder="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Monitors"/>
+
+      <FolderItem ID="Test.SqlMonitor.MP.FolderItem.Template.Rules.DatabaseOleDBQuery.PerformanceCollection"
+                  ElementID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection"
+                  Folder="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Rules.Performance" />      
+      <FolderItem ID="Test.SqlMonitor.MP.FolderItem.Template.Rules.DatabaseOleDBQuery.AlertGeneratingRule"
+                  ElementID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule"
+                  Folder="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Rules.Alert" />
+
+    </FolderItems>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Monitors">
+          <Name>SQL Monitoring</Name>
+        </DisplayString>
+        
+        <DisplayString ElementID="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Rules.Performance">
+          <Name>SQL Monitoring</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.Folder.Authoring.SqlMonitoring.Rules.Alert">
+          <Name>SQL Monitoring</Name>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

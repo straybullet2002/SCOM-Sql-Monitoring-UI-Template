@@ -1,0 +1,455 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      
+      <!-- Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults -->
+      <DataSourceModuleType ID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults" Accessibility="Public">
+        <Configuration>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="OneRowPerItem" type="xsd:boolean" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+          <xsd:element name="IntervalSeconds" type="xsd:int" />
+          <xsd:element name="SyncTime" type="xsd:string" />          
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="OleDbQuery" TypeID="Test.SqlMonitor.MP.Probe.DatabaseOleDBQuery.WithResults">
+                <ServerName>$Config/ServerName$</ServerName>
+                <DatabaseName>$Config/DatabaseName$</DatabaseName>
+                <ProviderName>$Config/ProviderName$</ProviderName>
+                <Query>$Config/Query$</Query>
+                <OneRowPerItem>$Config/OneRowPerItem$</OneRowPerItem>
+                <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+                <RunAsMode>$Config/RunAsMode$</RunAsMode>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="OleDbQuery">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.OleDbData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter -->
+      <DataSourceModuleType ID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter" Accessibility="Public">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>System!System.ExpressionEvaluatorSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="OneRowPerItem" type="xsd:boolean" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+          <xsd:element name="SchedulerFilter">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="ProcessDataMode">
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:enumeration value="Always"/>
+                      <xsd:enumeration value="OnSchedule"/>
+                      <xsd:enumeration value="ExceptSchedule"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="Schedule" type="PublicSchedulerType" minOccurs="0" maxOccurs="1"/>
+                <xsd:choice minOccurs="0" maxOccurs="1">
+                  <xsd:element name="TimeXPathQuery" type="xsd:string"/>
+                  <xsd:element name="UseCurrentTime" type="xsd:boolean" default="false"/>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="IntervalSeconds" type="xsd:int" />
+          <xsd:element name="SyncTime" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="OleDbProbe" TypeID="Test.SqlMonitor.MP.Probe.DatabaseOleDBQuery.WithResults">
+                <ServerName>$Config/ServerName$</ServerName>
+                <DatabaseName>$Config/DatabaseName$</DatabaseName>
+                <ProviderName>$Config/ProviderName$</ProviderName>
+                <Query>$Config/Query$</Query>
+                <OneRowPerItem>$Config/OneRowPerItem$</OneRowPerItem>
+                <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+                <RunAsMode>$Config/RunAsMode$</RunAsMode>
+              </ProbeAction>
+              <ConditionDetection ID="SchedulerFilter" TypeID="System!System.SchedulerFilter">
+                <SchedulerFilter>$Config/SchedulerFilter$</SchedulerFilter>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="OleDbProbe">
+                <Node ID="SchedulerFilter">
+                  <Node ID="Scheduler"/>
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.OleDbData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression -->
+      <DataSourceModuleType ID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" Accessibility="Public">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>System!System.ExpressionEvaluatorSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="OneRowPerItem" type="xsd:boolean" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="NumSamples" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+          <xsd:element name="SchedulerFilter">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="ProcessDataMode">
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:enumeration value="Always"/>
+                      <xsd:enumeration value="OnSchedule"/>
+                      <xsd:enumeration value="ExceptSchedule"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="Schedule" type="PublicSchedulerType" minOccurs="0" maxOccurs="1"/>
+                <xsd:choice minOccurs="0" maxOccurs="1">
+                  <xsd:element name="TimeXPathQuery" type="xsd:string"/>
+                  <xsd:element name="UseCurrentTime" type="xsd:boolean" default="false"/>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="Expression" type="ExpressionType"/> 
+          <xsd:element name="IntervalSeconds" type="xsd:int" />
+          <xsd:element name="SyncTime" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>          
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="NumSamples" Selector="$Config/NumSamples$" ParameterType="int"/>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter">
+                <ServerName>$Config/ServerName$</ServerName>
+                <DatabaseName>$Config/DatabaseName$</DatabaseName>
+                <ProviderName>$Config/ProviderName$</ProviderName>
+                <Query>$Config/Query$</Query>
+                <OneRowPerItem>$Config/OneRowPerItem$</OneRowPerItem>
+                <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+                <RunAsMode>$Config/RunAsMode$</RunAsMode>
+                <SchedulerFilter>$Config/SchedulerFilter$</SchedulerFilter>
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ConditionDetection ID="ExpressionFilter" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>$Config/Expression$</Expression>
+              <SuppressionSettings>
+                <MatchCount>$Config/NumSamples$</MatchCount>   
+                <SampleCount>$Config/NumSamples$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="ExpressionFilter">
+                <Node ID="DS"/>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.OleDbData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance -->
+      <DataSourceModuleType ID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance" Accessibility="Public">
+        <Configuration>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+          <xsd:element name="ObjectName" type="xsd:string"/>
+          <xsd:element name="CounterName" type="xsd:string"/>
+          <xsd:element name="InstanceName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="Value" type="xsd:string"/>
+          <xsd:element name="IntervalSeconds" type="xsd:int" />
+          <xsd:element name="SyncTime" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults">
+                <ServerName>$Config/ServerName$</ServerName>
+                <DatabaseName>$Config/DatabaseName$</DatabaseName>
+                <ProviderName>$Config/ProviderName$</ProviderName>
+                <Query>$Config/Query$</Query>
+                <OneRowPerItem>true</OneRowPerItem>
+                <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+                <RunAsMode>$Config/RunAsMode$</RunAsMode>
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ConditionDetection ID="QuerySucceededFilter" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <SimpleExpression>
+                    <ValueExpression>
+                      <XPathQuery Type="Integer">RowLength</XPathQuery>
+                    </ValueExpression>
+                    <Operator>Equal</Operator>
+                    <ValueExpression>
+                      <Value Type="Integer">1</Value>
+                    </ValueExpression>
+                  </SimpleExpression>
+                </Expression>
+              </ConditionDetection>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>$Config/ObjectName$</ObjectName>
+                <CounterName>$Config/CounterName$</CounterName>
+                <InstanceName>$Config/InstanceName$</InstanceName>
+                <Value>$Config/Value$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="PerfMapper">
+                <Node ID="QuerySucceededFilter">
+                  <Node ID="DS"/>
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized -->
+      <DataSourceModuleType ID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" Accessibility="Public">
+        <Configuration>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+          <xsd:element name="ObjectName" type="xsd:string"/>
+          <xsd:element name="CounterName" type="xsd:string"/>
+          <xsd:element name="InstanceName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="Value" type="xsd:string"/>
+          <xsd:element name="IntervalSeconds" type="xsd:int" />
+          <xsd:element name="SyncTime" type="xsd:string" />
+          <xsd:element name="Tolerance" type="xsd:double"/>
+          <xsd:element name="ToleranceType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="Absolute"/>
+                <xsd:enumeration value="Percentage"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="MaximumSampleSeparation" type="xsd:unsignedInt"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Tolerance" Selector="$Config/Tolerance$" ParameterType="double" />
+          <OverrideableParameter ID="MaximumSampleSeparation" Selector="$Config/MaximumSampleSeparation$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance">
+                <ServerName>$Config/ServerName$</ServerName>
+                <DatabaseName>$Config/DatabaseName$</DatabaseName>
+                <ProviderName>$Config/ProviderName$</ProviderName>
+                <Query>$Config/Query$</Query>
+                <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+                <RunAsMode>$Config/RunAsMode$</RunAsMode>
+                <ObjectName>$Config/ObjectName$</ObjectName>
+                <CounterName>$Config/CounterName$</CounterName>
+                <InstanceName>$Config/InstanceName$</InstanceName>
+                <Value>$Config/Value$</Value>
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>              
+              </DataSource>
+              <ConditionDetection ID="OptimizedFilter" TypeID="Perf!System.Performance.OptimizedCollectionFilter">
+                <Tolerance>$Config/Tolerance$</Tolerance>
+                <ToleranceType>$Config/ToleranceType$</ToleranceType>
+                <MaximumSampleSeparation>$Config/MaximumSampleSeparation$</MaximumSampleSeparation>
+                <SamplingPeriodInSeconds>$Config/IntervalSeconds$</SamplingPeriodInSeconds>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="OptimizedFilter">
+                <Node ID="DS"/>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Test.SqlMonitor.MP.Probe.DatabaseOleDBQuery.WithResults -->
+      <ProbeActionModuleType ID="Test.SqlMonitor.MP.Probe.DatabaseOleDBQuery.WithResults" Accessibility="Public" Batching="false" PassThrough="false"
+                             RunAs="Test.SqlMonitor.MP.SecureReference.OleDbQuery.ImpersonationRunAsProfile">
+        <Configuration>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="OneRowPerItem" type="xsd:boolean" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PassThru" TypeID="System!System.PassThroughProbe" />
+              <ProbeAction ID="OleDbProbe" TypeID="System!System.OleDbProbe">
+                <ConnectionString>Provider=$Config/ProviderName$;Server=$Config/ServerName$;Database=$Config/DatabaseName$;$Config/RunAsMode$</ConnectionString>
+                <Query>$Config/Query$</Query>
+                <GetValue>true</GetValue>
+                <IncludeOriginalItem>false</IncludeOriginalItem>
+                <OneRowPerItem>$Config/OneRowPerItem$</OneRowPerItem>
+                <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+                <GetFetchTime>false</GetFetchTime>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="OleDbProbe">
+                <Node ID="PassThru" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.OleDbData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+      
+    </ModuleTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="ServerName">
+          <Name>Server Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="DatabaseName">
+          <Name>Database Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="Query">
+          <Name>Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="QueryTimeout">
+          <Name>Query Timeout</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="SyncTime">
+          <Name>Sync Time</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="Tolerance">
+          <Name>Tolerance</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="MaximumSampleSeparation">
+          <Name>Maximum Sample Separation</Name>
+        </DisplayString>
+        
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="ServerName">
+          <Name>Server Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="DatabaseName">
+          <Name>Database Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="Query">
+          <Name>Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="OneRowPerItem">
+          <Name>One Row Per Item</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="QueryTimeout">
+          <Name>Query Timeout</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="NumSamples">
+          <Name>Number Of Samples</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="SyncTime">
+          <Name>Sync Time</Name>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

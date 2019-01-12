@@ -1,0 +1,284 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <MonitorTypes>
+
+      <!-- Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState -->
+      <UnitMonitorType ID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="QueryErrorState"/>
+          <MonitorTypeState ID="QuerySuccessState"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>System!System.ExpressionEvaluatorSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="NumSamples" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+          <xsd:element name="SchedulerFilter">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="ProcessDataMode">
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:enumeration value="Always"/>
+                      <xsd:enumeration value="OnSchedule"/>
+                      <xsd:enumeration value="ExceptSchedule"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="Schedule" type="PublicSchedulerType" minOccurs="0" maxOccurs="1"/>
+                <xsd:choice minOccurs="0" maxOccurs="1">
+                  <xsd:element name="TimeXPathQuery" type="xsd:string"/>
+                  <xsd:element name="UseCurrentTime" type="xsd:boolean" default="false"/>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="ErrorExpression" type="ExpressionType"/>
+          <xsd:element name="SuccessExpression" type="ExpressionType"/>          
+          <xsd:element name="IntervalSeconds" type="xsd:int" />
+          <xsd:element name="SyncTime" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="NumSamples" Selector="$Config/NumSamples$" ParameterType="int"/>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DSError" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression">
+              <ServerName>$Config/ServerName$</ServerName>
+              <DatabaseName>$Config/DatabaseName$</DatabaseName>
+              <ProviderName>$Config/ProviderName$</ProviderName>
+              <Query>$Config/Query$</Query>
+              <OneRowPerItem>true</OneRowPerItem>
+              <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+              <NumSamples>$Config/NumSamples$</NumSamples>
+              <RunAsMode>$Config/RunAsMode$</RunAsMode>              
+              <SchedulerFilter>$Config/SchedulerFilter$</SchedulerFilter>
+              <Expression>$Config/ErrorExpression$</Expression>
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+            </DataSource>
+            <DataSource ID="DSSuccess" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression">
+              <ServerName>$Config/ServerName$</ServerName>
+              <DatabaseName>$Config/DatabaseName$</DatabaseName>
+              <ProviderName>$Config/ProviderName$</ProviderName>
+              <Query>$Config/Query$</Query>
+              <OneRowPerItem>true</OneRowPerItem>
+              <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+              <NumSamples>$Config/NumSamples$</NumSamples>
+              <RunAsMode>$Config/RunAsMode$</RunAsMode>
+              <SchedulerFilter>$Config/SchedulerFilter$</SchedulerFilter>
+              <Expression>$Config/SuccessExpression$</Expression>
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+            </DataSource>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="QueryErrorState">
+              <Node ID="DSError"/>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="QuerySuccessState">
+              <Node ID="DSSuccess"/>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState -->
+      <UnitMonitorType ID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="QueryErrorState"/>
+          <MonitorTypeState ID="QueryWarningState"/>
+          <MonitorTypeState ID="QuerySuccessState"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>System!System.ExpressionEvaluatorSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element name="ServerName" type="xsd:string" />
+          <xsd:element name="DatabaseName" type="xsd:string" />
+          <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="Query" type="xsd:string" />
+          <xsd:element name="QueryTimeout" type="xsd:int" />
+          <xsd:element name="NumSamples" type="xsd:int" />
+          <xsd:element name="RunAsMode" type="xsd:string" />
+          <xsd:element name="SchedulerFilter">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="ProcessDataMode">
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:enumeration value="Always"/>
+                      <xsd:enumeration value="OnSchedule"/>
+                      <xsd:enumeration value="ExceptSchedule"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="Schedule" type="PublicSchedulerType" minOccurs="0" maxOccurs="1"/>
+                <xsd:choice minOccurs="0" maxOccurs="1">
+                  <xsd:element name="TimeXPathQuery" type="xsd:string"/>
+                  <xsd:element name="UseCurrentTime" type="xsd:boolean" default="false"/>
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="ErrorExpression" type="ExpressionType"/>
+          <xsd:element name="WarningExpression" type="ExpressionType"/>
+          <xsd:element name="SuccessExpression" type="ExpressionType"/>
+          <xsd:element name="IntervalSeconds" type="xsd:int" />
+          <xsd:element name="SyncTime" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
+          <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
+          <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="NumSamples" Selector="$Config/NumSamples$" ParameterType="int"/>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DSError" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression">
+              <ServerName>$Config/ServerName$</ServerName>
+              <DatabaseName>$Config/DatabaseName$</DatabaseName>
+              <ProviderName>$Config/ProviderName$</ProviderName>
+              <Query>$Config/Query$</Query>
+              <OneRowPerItem>true</OneRowPerItem>
+              <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+              <NumSamples>$Config/NumSamples$</NumSamples>
+              <RunAsMode>$Config/RunAsMode$</RunAsMode>              
+              <SchedulerFilter>$Config/SchedulerFilter$</SchedulerFilter>
+              <Expression>$Config/ErrorExpression$</Expression>
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+            </DataSource>
+            <DataSource ID="DSWarning" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression">
+              <ServerName>$Config/ServerName$</ServerName>
+              <DatabaseName>$Config/DatabaseName$</DatabaseName>
+              <ProviderName>$Config/ProviderName$</ProviderName>
+              <Query>$Config/Query$</Query>
+              <OneRowPerItem>true</OneRowPerItem>
+              <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+              <NumSamples>$Config/NumSamples$</NumSamples>
+              <RunAsMode>$Config/RunAsMode$</RunAsMode>              
+              <SchedulerFilter>$Config/SchedulerFilter$</SchedulerFilter>
+              <Expression>$Config/WarningExpression$</Expression>
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+            </DataSource>
+            <DataSource ID="DSSuccess" TypeID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression">
+              <ServerName>$Config/ServerName$</ServerName>
+              <DatabaseName>$Config/DatabaseName$</DatabaseName>
+              <ProviderName>$Config/ProviderName$</ProviderName>
+              <Query>$Config/Query$</Query>
+              <OneRowPerItem>true</OneRowPerItem>
+              <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
+              <NumSamples>$Config/NumSamples$</NumSamples>
+              <RunAsMode>$Config/RunAsMode$</RunAsMode>
+              <SchedulerFilter>$Config/SchedulerFilter$</SchedulerFilter>
+              <Expression>$Config/SuccessExpression$</Expression>
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+            </DataSource>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="QueryErrorState">
+              <Node ID="DSError"/>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="QueryWarningState">
+              <Node ID="DSWarning"/>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="QuerySuccessState">
+              <Node ID="DSSuccess"/>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+    </MonitorTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState">
+          <Name>OleDb Two State</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="QueryErrorState">
+          <Name>Query Error</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="QuerySuccessState">
+          <Name>Query Success</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="ServerName">
+          <Name>Server Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="DatabaseName">
+          <Name>Database Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="Query">
+          <Name>Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="QueryTimeout">
+          <Name>Query Timeout</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="NumSamples">
+          <Name>Number Of Samples</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="SyncTime">
+          <Name>Sync Time</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState">
+          <Name>OleDb Three State</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="QueryErrorState">
+          <Name>Query Error</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="QueryWarningState">
+          <Name>Query Warning</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="QuerySuccessState">
+          <Name>Query Success</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="ServerName">
+          <Name>Server Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="DatabaseName">
+          <Name>Database Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="Query">
+          <Name>Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="QueryTimeout">
+          <Name>Query Timeout</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="NumSamples">
+          <Name>Number Of Samples</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="SyncTime">
+          <Name>Sync Time</Name>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

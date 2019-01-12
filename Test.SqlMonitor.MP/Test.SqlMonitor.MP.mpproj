@@ -1,0 +1,106 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{6521d4d4-1000-4195-bb92-56bbee0fbc69}</ProjectGuid>
+    <RootNamespace>Test.SqlMonitor.MP</RootNamespace>
+    <Name>Test.SqlMonitor.MP</Name>
+    <ManagementPackName>Test.SqlMonitor.MP</ManagementPackName>
+    <Version>1.0.0.0</Version>
+    <MpFrameworkVersion>v7.0.1</MpFrameworkVersion>
+    <MpFrameworkProfile>OM</MpFrameworkProfile>
+    <ProductVersion>1.1.0.0</ProductVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <GenerateSealed>True</GenerateSealed>
+    <Company>Taxcom</Company>
+    <Copyright>Copyright (c) handjando@taxcom.ru. All rights reserved.</Copyright>
+    <DelaySigning>False</DelaySigning>
+    <AssemblyOriginatorKeyFile>E:\Programs\Projects\SCOM_MP\Taxcom.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DelaySigning>false</DelaySigning>
+    <Company>MyCompany</Company>
+    <Copyright>Copyright (c) MyCompany. All rights reserved.</Copyright>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <ManagementPackReference Include="Microsoft.SystemCenter.DataWarehouse.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012SP1\Microsoft.SystemCenter.DataWarehouse.Library.mp</HintPath>
+      <Alias>SCDW</Alias>
+      <MinVersion>7.0.8432.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Library">
+      <Alias>SC</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.RuleTemplates">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\Custom\Microsoft.SystemCenter.RuleTemplates.mp</HintPath>
+      <Alias>MSR</Alias>
+      <MinVersion>7.0.9538.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.Library">
+      <Alias>Windows</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Health.Library">
+      <Alias>Health</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Library">
+      <Alias>System</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Visualization.Library">
+      <Alias>Visualization</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Performance.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012SP1\System.Performance.Library.mp</HintPath>
+      <Alias>Perf</Alias>
+      <MinVersion>7.0.8432.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FolderItems.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="KnowledgeArticles.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MonitorTypes.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Resources.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SecureReferences.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Templates.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UIPageSets.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Test.SqlMonitor.UI\Test.SqlMonitor.UI.csproj">
+      <Name>Test.SqlMonitor.UI</Name>
+      <Project>{3767b52a-ba6a-4bc7-b8ba-55f44aef228f}</Project>
+      <Private>True</Private>
+      <PackageToBundle>True</PackageToBundle>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
+</Project>

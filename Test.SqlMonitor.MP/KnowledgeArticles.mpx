@@ -1,0 +1,424 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="Test.SqlMonitor.MP">
+          <Name>Test SQL Monitor (UI) Management Pack</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+    <LanguagePack ID="RUS" IsDefault="false">
+      <KnowledgeArticles>
+        
+        <!-- Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState -->
+        <KnowledgeArticle ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Описание</maml:title>
+              <maml:para>Данный монитор предназначен для выполнения запроса к базе данных SQL Server и сопоставления результата со здоровьем цели.</maml:para>
+              <maml:para />
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Возможности</maml:title>
+              <maml:list>
+                <maml:listItem>
+                  <maml:para>Windows либо SQL-аутентификация</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Указание числа повторений для срабатывания</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Настройка расписания активности монитора</maml:para>
+                </maml:listItem>
+              </maml:list>
+              <maml:para />
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Запрос</maml:title>
+              <maml:para>Запрос к базе должен возвращать данные таблицей, состоящей из одной строки и набора колонок (либо не возвращать данные совсем, тогда RowLength в возвращаемой xml будет равен 0).</maml:para>
+              <maml:para />
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Условия срабатывания</maml:title>
+              <maml:para>Монитор использует модуль System.OleDbProbe и возвращает данные типа System.OleDbData. Документация по
+                <maml:navigationLink>
+                  <maml:linkText>ссылке.</maml:linkText>
+                  <maml:uri href="https://docs.microsoft.com/en-us/previous-versions/system-center/developer/jj129864(v=msdn.10)"/>
+                </maml:navigationLink>
+              </maml:para>
+              <maml:para>Если требуется учесть случаи, когда запрос не удалось выполнить по какой-то причине, то это условие дожно идти первым в списке (например, ResultCode Does not equal 0).</maml:para>
+              <maml:para>Примечание: по умолчанию значения, указанные в условиях, сравниваются как строки. Если требуется работать с другими типами (например, числами), потребуется выгрузить пакет управления и изменить тип вручную (пример: &lt;XPathQuery Type="Integer"&gt;ResultCode&lt;/XPathQuery&gt;) либо возвращать запросом текстовое поле, отражающее состояние (например, Error или OK).</maml:para>
+              <maml:para />
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Аутентификация</maml:title>
+              <maml:list>
+                <maml:listItem>
+                  <maml:para>Для аутентификации Windows в настройках монитора должна быть установлена галка "Use Integrated Security", а к профилю "Impersonation Run As Profile (OleDb)" должен быть привязан соответствующий Windows-аккаунт (опционально, иначе будет использоваться Default Action Account)</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Для аутентификации Sql галка должна быть снята, а к профилю "Simple Run As Profile (OleDb)" привязан Simple-аккаунт</maml:para>
+                </maml:listItem>
+              </maml:list>
+              <maml:para />
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Переопределения</maml:title>
+              <maml:para>Доступны следующие свойства:</maml:para>
+              <maml:table>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Свойство</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Значение по умолчанию</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Описание</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Server Name</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Имя сервера бд</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Database Name</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Имя базы данных</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Query</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Текст sql-запроса</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Query Timeout</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>30</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Таймаут в секундах ожидания ответа на запрос</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Number Of Samples</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>1</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Количество повторений для срабатывания монитора</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Interval Seconds</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>900</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Интервал запуска в секундах</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Sync Time</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Время синхронизации</maml:para>
+                  </maml:entry>
+                </maml:row>
+              </maml:table>
+              <maml:para />
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+    
+        <!-- Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection -->
+        <KnowledgeArticle ElementID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection" Visible="true">
+          <MamlContent>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Описание</maml:title>
+		          <maml:para>Правило предназначено для сбора счётчиков производительности на основании данных в базе SQL. Поддерживает оптимизацию.</maml:para>
+		          <maml:para>Правило использует модуль System.OleDbProbe и возвращает данные типа System.OleDbData. Документация по
+                <maml:navigationLink>
+                  <maml:linkText>ссылке.</maml:linkText>
+                  <maml:uri href="https://docs.microsoft.com/en-us/previous-versions/system-center/developer/jj129864(v=msdn.10)"/>
+                </maml:navigationLink>
+              </maml:para>
+		          <maml:para />
+	          </maml:section>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Запрос</maml:title>
+		          <maml:para>Запрос к базе должен возвращать данные таблицей, состоящей из одной строки и набора колонок. Колонка, содержащая данные производительности, должна иметь числовой тип (предпочтительно целый).</maml:para>
+		          <maml:para>Если требуется собирать несколько показателей с одной цели, рекомендуется использовать для нескольких правил одинаковый запрос, возвращающий все необходимые колонки. В этом случае будет работать cookdown.</maml:para>
+		          <maml:para />
+	          </maml:section>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Аутентификация</maml:title>
+		          <maml:para>Для аутентификации Windows в настройках монитора должна быть установлена галка "Use Integrated Security", а к профилю "Impersonation Run As Profile (OleDb)" должен быть привязан соответствующий Windows-аккаунт (опционально, иначе будет использоваться Default Action Account)</maml:para>
+		          <maml:para>Для аутентификации Sql галка должна быть снята, а к профилю "Simple Run As Profile (OleDb)" привязан Simple-аккаунт</maml:para>
+		          <maml:para />
+	          </maml:section>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Переопределения</maml:title>
+		          <maml:para>Доступны следующие свойства:</maml:para>
+		          <maml:table>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Свойство</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Значение по умолчанию</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Описание</maml:para>
+				          </maml:entry>
+			          </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Server Name</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Имя сервера бд</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Database Name</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Имя базы данных</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Query</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Текст sql-запроса</maml:para>
+                  </maml:entry>
+                </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Query Timeout</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>30</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Таймаут в секундах ожидания ответа на запрос</maml:para>
+				          </maml:entry>
+			          </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Interval Seconds</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>900</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Интервал запуска в секундах</maml:para>
+				          </maml:entry>
+			          </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Sync Time</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>-</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Время синхронизации</maml:para>
+				          </maml:entry>
+			          </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Tolerance</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>-</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Порог чувствительности (для оптимизации)</maml:para>
+				          </maml:entry>
+			          </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Maximum Sample Separation</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>-</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Максимальное количество пропущенных элементов данных (для оптимизации)</maml:para>
+				          </maml:entry>
+			          </maml:row>
+		          </maml:table>
+		          <maml:para />
+	          </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+        
+        <!-- Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule -->
+        <KnowledgeArticle ElementID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule" Visible="true">
+          <MamlContent>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Описание</maml:title>
+		          <maml:para>Правило предназначено для генерации алертов на основании данных в базе SQL. Поддерживается выражение для фильтрации событий и учёт числа повторений, после которых будет создаваться алерт.</maml:para>
+		          <maml:para>Правило использует модуль System.OleDbProbe и возвращает данные типа System.OleDbData. Документация по
+                <maml:navigationLink>
+                  <maml:linkText>ссылке.</maml:linkText>
+                  <maml:uri href="https://docs.microsoft.com/en-us/previous-versions/system-center/developer/jj129864(v=msdn.10)"/>
+                </maml:navigationLink>
+              </maml:para>
+		          <maml:para />
+	          </maml:section>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Запрос</maml:title>
+		          <maml:para>Запрос к базе должен возвращать данные таблицей, состоящей из одной строки и набора колонок.</maml:para>
+		          <maml:para />
+	          </maml:section>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Аутентификация</maml:title>
+		          <maml:para>Для аутентификации Windows в настройках монитора должна быть установлена галка "Use Integrated Security", а к профилю "Impersonation Run As Profile (OleDb)" должен быть привязан соответствующий Windows-аккаунт (опционально, иначе будет использоваться Default Action Account)</maml:para>
+		          <maml:para>Для аутентификации Sql галка должна быть снята, а к профилю "Simple Run As Profile (OleDb)" привязан Simple-аккаунт</maml:para>
+		          <maml:para />
+	          </maml:section>
+	          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+		          <maml:title>Переопределения</maml:title>
+              <maml:para>Доступны следующие свойства:</maml:para>
+		          <maml:table>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Свойство</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Значение по умолчанию</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Описание</maml:para>
+				          </maml:entry>
+			          </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Server Name</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Имя сервера бд</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Database Name</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Имя базы данных</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>Query</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>-</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Текст sql-запроса</maml:para>
+                  </maml:entry>
+                </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Query Timeout</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>30</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Таймаут в секундах ожидания ответа на запрос</maml:para>
+				          </maml:entry>
+			          </maml:row>
+                <maml:row>
+				          <maml:entry>
+					          <maml:para>Number Of Samples</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>1</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Количество повторений для срабатывания монитора</maml:para>
+				          </maml:entry>
+			          </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Interval Seconds</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>900</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Интервал запуска в секундах</maml:para>
+				          </maml:entry>
+			          </maml:row>
+			          <maml:row>
+				          <maml:entry>
+					          <maml:para>Sync Time</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>-</maml:para>
+				          </maml:entry>
+				          <maml:entry>
+					          <maml:para>Время синхронизации</maml:para>
+				          </maml:entry>
+			          </maml:row>			          
+		          </maml:table>
+		          <maml:para />
+	          </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+    
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

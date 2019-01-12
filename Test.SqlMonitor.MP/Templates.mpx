@@ -1,0 +1,260 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Templates>
+
+    <!-- Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection -->
+    <Template ID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection" Purpose="RuleCreation">
+      <Configuration>
+        <IncludeSchemaTypes>
+          <!-- for reference purpose -->
+          <SchemaType>SCDW!Microsoft.SystemCenter.DataWarehouse.StandardDatasetSchema</SchemaType>
+          <SchemaType>MSR!Microsoft.SystemCenter.RuleTemplates.ManagementPackCategoryType</SchemaType>
+          <SchemaType>MSR!Microsoft.SystemCenter.RuleTemplates.ManagementPackIdentifiers</SchemaType>
+        </IncludeSchemaTypes>
+        <xsd:element name="ID" type="xsd:string"/>
+        <xsd:element name="Name" type="xsd:string"/>
+        <xsd:element name="Enabled" type="xsd:boolean"/>
+        <xsd:element name="Description" type="xsd:string"/>
+        <xsd:element name="Target" type="xsd:string"/>
+        <xsd:element name="Category" type="ManagementPackCategoryType"/>
+        <xsd:element name="LocaleId" type="ManagementPackLanguageIdentifier"/>
+        <xsd:element name="ServerName" type="xsd:string" />
+        <xsd:element name="DatabaseName" type="xsd:string" />
+        <xsd:element name="ProviderName" type="xsd:string" />
+        <xsd:element name="Query" type="xsd:string" />
+        <xsd:element name="QueryTimeout" type="xsd:int" />
+        <xsd:element name="RunAsMode" type="xsd:string" />
+        <xsd:element name="ObjectName" type="xsd:string"/>
+        <xsd:element name="CounterName" type="xsd:string"/>
+        <xsd:element name="InstanceName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Value" type="xsd:string"/>
+        <xsd:element name="IntervalSeconds" type="xsd:int" />
+        <xsd:element name="SyncTime" type="xsd:string" />
+        <xsd:element name="Tolerance" type="xsd:double"/>
+        <xsd:element name="ToleranceType" minOccurs="0" maxOccurs="1">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="Absolute"/>
+              <xsd:enumeration value="Percentage"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="MaximumSampleSeparation" type="xsd:unsignedInt"/>
+      </Configuration>
+      <References>
+        <Reference ID="Self"/>
+        <Reference ID="SC"/>
+        <Reference ID="SCDW"/>
+      </References>
+      <Implementation>
+        <Monitoring>
+          <Rules>
+            <Rule ID="$TemplateConfig/ID$.Rule.DatabaseOleDBQuery.CollectPerformanceOptimized" Target="$TemplateConfig/Target$" Enabled="$TemplateConfig/Enabled$">
+              <Category>$TemplateConfig/Category$</Category>
+              <DataSources>
+                <DataSource ID="DS" TypeID="$Reference/Self$Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized">
+                  <ServerName>$TemplateConfig/ServerName$</ServerName>
+                  <DatabaseName>$TemplateConfig/DatabaseName$</DatabaseName>
+                  <ProviderName>$TemplateConfig/ProviderName$</ProviderName>
+                  <Query>$TemplateConfig/Query$</Query>
+                  <QueryTimeout>$TemplateConfig/QueryTimeout$</QueryTimeout>
+                  <RunAsMode>$TemplateConfig/RunAsMode$</RunAsMode>
+                  <ObjectName>$TemplateConfig/ObjectName$</ObjectName>
+                  <CounterName>$TemplateConfig/CounterName$</CounterName>
+                  <InstanceName>$TemplateConfig/InstanceName$</InstanceName>
+                  <Value>$TemplateConfig/Value$</Value>
+                  <IntervalSeconds>$TemplateConfig/IntervalSeconds$</IntervalSeconds>
+                  <SyncTime>$TemplateConfig/SyncTime$</SyncTime>
+                  <Tolerance>$TemplateConfig/Tolerance$</Tolerance>
+                  <ToleranceType>$TemplateConfig/ToleranceType$</ToleranceType>
+                  <MaximumSampleSeparation>$TemplateConfig/MaximumSampleSeparation$</MaximumSampleSeparation>
+                </DataSource>
+              </DataSources>
+              <WriteActions>
+                <WriteAction ID="WriteToDB" TypeID="$Reference/SC$Microsoft.SystemCenter.CollectPerformanceData"/>
+                <WriteAction ID="WriteToDW" TypeID="$Reference/SCDW$Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData"/>
+              </WriteActions>
+            </Rule>
+          </Rules>
+        </Monitoring>
+        <LanguagePacks>
+          <LanguagePack ID="$TemplateConfig/LocaleId$" IsDefault="true">
+            <DisplayStrings>
+              <DisplayString ElementID="$TemplateConfig/ID$.Rule.DatabaseOleDBQuery.CollectPerformanceOptimized">
+                <Name>$TemplateConfig/Name$</Name>
+                <Description>$TemplateConfig/Description$</Description>
+              </DisplayString>
+            </DisplayStrings>
+          </LanguagePack>
+        </LanguagePacks>
+      </Implementation>
+    </Template>
+
+    <!-- Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule -->
+    <Template ID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule" Purpose="RuleCreation">
+      <Configuration>
+        <IncludeSchemaTypes>
+          <SchemaType>System!System.ExpressionEvaluatorSchema</SchemaType>
+          <SchemaType>Health!System.Health.AlertSchema</SchemaType>
+          <SchemaType>MSR!Microsoft.SystemCenter.RuleTemplates.ManagementPackCategoryType</SchemaType>
+          <SchemaType>MSR!Microsoft.SystemCenter.RuleTemplates.ManagementPackIdentifiers</SchemaType>
+        </IncludeSchemaTypes>
+        <xsd:element name="ID" type="xsd:string"/>
+        <xsd:element name="Name" type="xsd:string"/>
+        <xsd:element name="Enabled" type="xsd:boolean"/>
+        <xsd:element name="Description" type="xsd:string"/>
+        <xsd:element name="Target" type="xsd:string"/>
+        <xsd:element name="Category" type="ManagementPackCategoryType"/>
+        <xsd:element name="LocaleId" type="ManagementPackLanguageIdentifier"/>
+        <xsd:element name="ServerName" type="xsd:string" />
+        <xsd:element name="DatabaseName" type="xsd:string" />
+        <xsd:element name="ProviderName" type="xsd:string" />
+        <xsd:element name="Query" type="xsd:string" />
+        <xsd:element name="QueryTimeout" type="xsd:int" />
+        <xsd:element name="NumSamples" type="xsd:int" />
+        <xsd:element name="RunAsMode" type="xsd:string" />
+        <xsd:element name="SchedulerFilter">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ProcessDataMode">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Always"/>
+                    <xsd:enumeration value="OnSchedule"/>
+                    <xsd:enumeration value="ExceptSchedule"/>
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="Schedule" type="PublicSchedulerType" minOccurs="0" maxOccurs="1"/>
+              <xsd:choice minOccurs="0" maxOccurs="1">
+                <xsd:element name="TimeXPathQuery" type="xsd:string"/>
+                <xsd:element name="UseCurrentTime" type="xsd:boolean" default="false"/>
+              </xsd:choice>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Expression" type="ExpressionType"/>
+        <xsd:element name="IntervalSeconds" type="xsd:int" />
+        <xsd:element name="SyncTime" type="xsd:string" />
+        <xsd:element name="Priority">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+              <xsd:minInclusive value="0"/>
+              <xsd:maxInclusive value="2"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="Severity">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+              <xsd:minInclusive value="0"/>
+              <xsd:maxInclusive value="2"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="AlertName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="AlertDescription" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="AlertOwner" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="AlertParameters" type="System.Health.AlertParameters" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Suppression" type="System.Health.Suppression" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom1" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom2" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom3" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom4" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom5" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom6" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom7" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom8" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom9" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="Custom10" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </Configuration>
+      <References>
+        <Reference ID="Self"/>
+        <Reference ID="Health"/>
+      </References>
+      <Implementation>
+        <Monitoring>
+          <Rules>
+            <Rule ID="$TemplateConfig/ID$.Rule.DatabaseOleDBQuery.GenerateAlert" Target="$TemplateConfig/Target$" Enabled="$TemplateConfig/Enabled$">
+              <Category>$TemplateConfig/Category$</Category>
+              <DataSources>
+                <DataSource ID="DS" TypeID="$Reference/Self$Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression">
+                  <ServerName>$TemplateConfig/ServerName$</ServerName>
+                  <DatabaseName>$TemplateConfig/DatabaseName$</DatabaseName>
+                  <ProviderName>$TemplateConfig/ProviderName$</ProviderName>
+                  <Query>$TemplateConfig/Query$</Query>
+                  <OneRowPerItem>true</OneRowPerItem>
+                  <QueryTimeout>$TemplateConfig/QueryTimeout$</QueryTimeout>
+                  <NumSamples>$TemplateConfig/NumSamples$</NumSamples>
+                  <RunAsMode>$TemplateConfig/RunAsMode$</RunAsMode>                  
+                  <SchedulerFilter>$TemplateConfig/SchedulerFilter$</SchedulerFilter>
+                  <Expression>$TemplateConfig/Expression$</Expression>
+                  <IntervalSeconds>$TemplateConfig/IntervalSeconds$</IntervalSeconds>
+                  <SyncTime>$TemplateConfig/SyncTime$</SyncTime>
+                </DataSource>
+              </DataSources>
+              <WriteActions>
+                <WriteAction ID="Alert" TypeID="$Reference/Health$System.Health.GenerateAlert">
+                  <Priority>$TemplateConfig/Priority$</Priority>
+                  <Severity>$TemplateConfig/Severity$</Severity>
+                  <AlertName/>
+                  <AlertDescription/>
+                  <AlertOwner>$TemplateConfig/AlertOwner$</AlertOwner>
+                  <AlertMessageId>$MPElement[Name="$TemplateConfig/ID$.Rule.DatabaseOleDBQuery.GenerateAlert.AlertMessage"]$</AlertMessageId>
+                  <AlertParameters>$TemplateConfig/AlertParameters$</AlertParameters>
+                  <Suppression>$TemplateConfig/Suppression$</Suppression>
+                  <Custom1>$TemplateConfig/Custom1$</Custom1>
+                  <Custom2>$TemplateConfig/Custom2$</Custom2>
+                  <Custom3>$TemplateConfig/Custom3$</Custom3>
+                  <Custom4>$TemplateConfig/Custom4$</Custom4>
+                  <Custom5>$TemplateConfig/Custom5$</Custom5>
+                  <Custom6>$TemplateConfig/Custom6$</Custom6>
+                  <Custom7>$TemplateConfig/Custom7$</Custom7>
+                  <Custom8>$TemplateConfig/Custom8$</Custom8>
+                  <Custom9>$TemplateConfig/Custom9$</Custom9>
+                  <Custom10>$TemplateConfig/Custom10$</Custom10>
+                </WriteAction>
+              </WriteActions>
+            </Rule>
+          </Rules>
+        </Monitoring>
+        <Presentation>
+          <StringResources>
+            <StringResource ID="$TemplateConfig/ID$.Rule.DatabaseOleDBQuery.GenerateAlert.AlertMessage"/>
+          </StringResources>
+        </Presentation>
+        <LanguagePacks>
+          <LanguagePack ID="$TemplateConfig/LocaleId$" IsDefault="true">
+            <DisplayStrings>
+              <DisplayString ElementID="$TemplateConfig/ID$.Rule.DatabaseOleDBQuery.GenerateAlert">
+                <Name>$TemplateConfig/Name$</Name>
+                <Description>$TemplateConfig/Description$</Description>
+              </DisplayString>
+              <DisplayString ElementID="$TemplateConfig/ID$.Rule.DatabaseOleDBQuery.GenerateAlert.AlertMessage">
+                <Name>$TemplateConfig/AlertName$</Name>
+                <Description>$TemplateConfig/AlertDescription$</Description>
+              </DisplayString>
+            </DisplayStrings>
+          </LanguagePack>
+        </LanguagePacks>
+      </Implementation>
+    </Template>
+    
+  </Templates>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection">
+          <Name>OleDb Performance Collection Rule</Name>
+          <Description>Collect performance data using SQL Server query</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule">
+          <Name>OleDb Alert Generating Rule</Name>
+          <Description>Generate alert using SQL Server query</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

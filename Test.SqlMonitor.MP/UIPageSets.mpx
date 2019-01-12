@@ -1,0 +1,1171 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PresentationTypes>
+    <UIPageSets>
+
+      <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState -->
+      <UIPageSet ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState"
+                 TypeDefinitionID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState">
+        <UIPageReferences>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.General.Page"
+                           PageID="Health!System.Health.MonitorGeneralPage"
+                           Usage="CreationAndUpdate"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.Help.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.Knowledge.KnowledgeForType"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <ElementName>Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState</ElementName>
+            </InputParameters>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.ConstructQuery.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.OleDbQuery.ConstructQuery"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <Query><![CDATA[SELECT COUNT(*) AS TableCount FROM INFORMATION_SCHEMA.tables]]></Query>
+              <QueryTimeout>30</QueryTimeout>
+              <NumSamples>1</NumSamples>
+            </InputParameters>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.Schedule.CreatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="CreationOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:attribute name="Unit">Minutes</xsl:attribute>15
+                    </xsl:element>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.Schedule.UpdatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="UpdateOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:value-of select="/IntervalSeconds"/>
+                    </xsl:element>
+                    <xsl:if test="boolean(string-length(/SyncTime))">
+                      <xsl:copy-of select="/SyncTime"/>
+                    </xsl:if>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.SchedulerFilter.Page"
+                           PageID="System!System.SchedulerFilterPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters/>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SchedulerFilter">
+                    <xsl:copy-of select="/SchedulerFilter/*"/>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.UnhealthyExpression.Page"
+                           PageID="System!System.ExpressionBuilderPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:choose>
+                    <xsl:when test="count(/ErrorExpression) &gt; 0">
+                      <xsl:element name="Expression">
+                        <xsl:copy-of select="/ErrorExpression/*"/>
+                      </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:element name="Expression">
+                        <xsl:element name="SimpleExpression">
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="XPathQuery">Columns/Column[1]</xsl:element>
+                          </xsl:element>
+                          <xsl:element name="Operator">Equal</xsl:element>
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="Value">Error</xsl:element>
+                          </xsl:element>
+                        </xsl:element>
+                      </xsl:element>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.HealthyExpression.Page"
+                           PageID="System!System.ExpressionBuilderPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:choose>
+                    <xsl:when test="count(/SuccessExpression) &gt; 0">
+                      <xsl:element name="Expression">
+                        <xsl:copy-of select="/SuccessExpression/*"/>
+                      </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:element name="Expression">
+                        <xsl:element name="SimpleExpression">
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="XPathQuery">Columns/Column[1]</xsl:element>
+                          </xsl:element>
+                          <xsl:element name="Operator">Equal</xsl:element>
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="Value">OK</xsl:element>
+                          </xsl:element>
+                        </xsl:element>
+                      </xsl:element>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.StateConfig.Page"
+                           PageID="Health!System.Health.OperationalStatesConfigPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <QuerySuccessState>Success</QuerySuccessState>
+              <QueryErrorState>Warning</QueryErrorState>
+            </InputParameters>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.Alert.Page"
+                           PageID="Health!System.Health.AlertingPage"
+                           Usage="CreationAndUpdate"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.Diagnostics.Page"
+                           PageID="Health!System.Health.DiagnosticAndRecoveryPage"
+                           Usage="UpdateOnly"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.ProductKnowledge.Page"
+                           PageID="Health!System.Health.ProductKnowledgePage"
+                           Usage="UpdateOnly"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.CompanyKnowledge.Page"
+                           PageID="Health!System.Health.CompanyKnowledgePage"
+                           Usage="UpdateOnly"/>
+        </UIPageReferences>     
+        <OutputTransform>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+            <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+            <xsl:template match="/">
+              <xsl:element name="ServerName">
+                <xsl:value-of select="/ServerName"/>
+              </xsl:element>
+              <xsl:element name="DatabaseName">
+                <xsl:value-of select="/DatabaseName"/>
+              </xsl:element>
+              <xsl:element name="ProviderName">
+                <xsl:value-of select="/ProviderName"/>
+              </xsl:element>
+              <xsl:element name="Query">
+                <xsl:value-of select="/Query"/>
+              </xsl:element>
+              <xsl:element name="QueryTimeout">
+                <xsl:value-of select="/QueryTimeout"/>
+              </xsl:element>
+              <xsl:element name="NumSamples">
+                <xsl:value-of select="/NumSamples"/>
+              </xsl:element>
+              <xsl:element name="RunAsMode">
+                <xsl:value-of select="/RunAsMode"/>
+              </xsl:element>              
+              <xsl:element name="SchedulerFilter">
+                <xsl:copy-of select="/SchedulerFilter/*"/>
+              </xsl:element>
+              <xsl:element name="ErrorExpression">
+                <xsl:copy-of select="/Expression[1]/*"/>
+              </xsl:element>
+              <xsl:element name="SuccessExpression">
+                <xsl:copy-of select="/Expression[2]/*"/>
+              </xsl:element>              
+              <xsl:element name="IntervalSeconds">
+                <xsl:variable name="RawInterval" select="/SimpleReccuringSchedule/Interval"/>
+                <xsl:variable name="Units" select="/SimpleReccuringSchedule/Interval/@Unit"/>
+                <xsl:choose>
+                  <xsl:when test="not(boolean($Units)) or $Units='Seconds'">
+                    <xsl:value-of select="$RawInterval"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Minutes'">
+                    <xsl:value-of select="$RawInterval*60"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Hours'">
+                    <xsl:value-of select="$RawInterval*3600"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Days'">
+                    <xsl:value-of select="$RawInterval*86400"/>
+                  </xsl:when>
+                </xsl:choose>
+              </xsl:element>
+              <xsl:element name="SyncTime">
+                <xsl:value-of select="/SimpleReccuringSchedule/SyncTime"/>
+              </xsl:element>              
+            </xsl:template>
+          </xsl:stylesheet>
+        </OutputTransform>
+      </UIPageSet>
+
+      <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState -->
+      <UIPageSet ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState"
+                 TypeDefinitionID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState">
+        <UIPageReferences>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.General.Page"
+                           PageID="Health!System.Health.MonitorGeneralPage"
+                           Usage="CreationAndUpdate"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.Help.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.Knowledge.KnowledgeForType"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <ElementName>Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState</ElementName>
+            </InputParameters>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.ConstructQuery.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.OleDbQuery.ConstructQuery"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <Query><![CDATA[SELECT COUNT(*) AS TableCount FROM INFORMATION_SCHEMA.tables]]></Query>
+              <QueryTimeout>30</QueryTimeout>
+              <NumSamples>1</NumSamples>
+            </InputParameters>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.Schedule.CreatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="CreationOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:attribute name="Unit">Minutes</xsl:attribute>15
+                    </xsl:element>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.Schedule.UpdatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="UpdateOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:value-of select="/IntervalSeconds"/>
+                    </xsl:element>
+                    <xsl:if test="boolean(string-length(/SyncTime))">
+                      <xsl:copy-of select="/SyncTime"/>
+                    </xsl:if>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.SchedulerFilter.Page"
+                           PageID="System!System.SchedulerFilterPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters/>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SchedulerFilter">
+                    <xsl:copy-of select="/SchedulerFilter/*"/>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.UnhealthyExpression.Page"
+                           PageID="System!System.ExpressionBuilderPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:choose>
+                    <xsl:when test="count(/ErrorExpression) &gt; 0">
+                      <xsl:element name="Expression">
+                        <xsl:copy-of select="/ErrorExpression/*"/>
+                      </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:element name="Expression">
+                        <xsl:element name="SimpleExpression">
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="XPathQuery">Columns/Column[1]</xsl:element>
+                          </xsl:element>
+                          <xsl:element name="Operator">Equal</xsl:element>
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="Value">Error</xsl:element>
+                          </xsl:element>
+                        </xsl:element>
+                      </xsl:element>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.WarningExpression.Page"
+                           PageID="System!System.ExpressionBuilderPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:choose>
+                    <xsl:when test="count(/WarningExpression) &gt; 0">
+                      <xsl:element name="Expression">
+                        <xsl:copy-of select="/WarningExpression/*"/>
+                      </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:element name="Expression">
+                        <xsl:element name="SimpleExpression">
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="XPathQuery">Columns/Column[1]</xsl:element>
+                          </xsl:element>
+                          <xsl:element name="Operator">Equal</xsl:element>
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="Value">Warning</xsl:element>
+                          </xsl:element>
+                        </xsl:element>
+                      </xsl:element>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.HealthyExpression.Page"
+                           PageID="System!System.ExpressionBuilderPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:choose>
+                    <xsl:when test="count(/SuccessExpression) &gt; 0">
+                      <xsl:element name="Expression">
+                        <xsl:copy-of select="/SuccessExpression/*"/>
+                      </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:element name="Expression">
+                        <xsl:element name="SimpleExpression">
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="XPathQuery">Columns/Column[1]</xsl:element>
+                          </xsl:element>
+                          <xsl:element name="Operator">Equal</xsl:element>
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="Value">OK</xsl:element>
+                          </xsl:element>
+                        </xsl:element>
+                      </xsl:element>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.StateConfig.Page"
+                           PageID="Health!System.Health.OperationalStatesConfigPage"
+                           Usage="CreationAndUpdate">
+            <InputParameters>
+              <QuerySuccessState>Success</QuerySuccessState>
+              <QueryWarningState>Warning</QueryWarningState>
+              <QueryErrorState>Error</QueryErrorState>
+            </InputParameters>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.Alert.Page"
+                           PageID="Health!System.Health.AlertingPage"
+                           Usage="CreationAndUpdate"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.Diagnostics.Page"
+                           PageID="Health!System.Health.DiagnosticAndRecoveryPage"
+                           Usage="UpdateOnly"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.ProductKnowledge.Page"
+                           PageID="Health!System.Health.ProductKnowledgePage"
+                           Usage="UpdateOnly"/>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.CompanyKnowledge.Page"
+                           PageID="Health!System.Health.CompanyKnowledgePage"
+                           Usage="UpdateOnly"/>
+        </UIPageReferences>
+        <OutputTransform>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+            <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+            <xsl:template match="/">
+              <xsl:element name="ServerName">
+                <xsl:value-of select="/ServerName"/>
+              </xsl:element>
+              <xsl:element name="DatabaseName">
+                <xsl:value-of select="/DatabaseName"/>
+              </xsl:element>
+              <xsl:element name="ProviderName">
+                <xsl:value-of select="/ProviderName"/>
+              </xsl:element>
+              <xsl:element name="Query">
+                <xsl:value-of select="/Query"/>
+              </xsl:element>
+              <xsl:element name="QueryTimeout">
+                <xsl:value-of select="/QueryTimeout"/>
+              </xsl:element>
+              <xsl:element name="NumSamples">
+                <xsl:value-of select="/NumSamples"/>
+              </xsl:element>
+              <xsl:element name="RunAsMode">
+                <xsl:value-of select="/RunAsMode"/>
+              </xsl:element>
+              <xsl:element name="SchedulerFilter">
+                <xsl:copy-of select="/SchedulerFilter/*"/>
+              </xsl:element>
+              <xsl:element name="ErrorExpression">
+                <xsl:copy-of select="/Expression[1]/*"/>
+              </xsl:element>
+              <xsl:element name="WarningExpression">
+                <xsl:copy-of select="/Expression[2]/*"/>
+              </xsl:element>
+              <xsl:element name="SuccessExpression">
+                <xsl:copy-of select="/Expression[3]/*"/>
+              </xsl:element>
+              <xsl:element name="IntervalSeconds">
+                <xsl:variable name="RawInterval" select="/SimpleReccuringSchedule/Interval"/>
+                <xsl:variable name="Units" select="/SimpleReccuringSchedule/Interval/@Unit"/>
+                <xsl:choose>
+                  <xsl:when test="not(boolean($Units)) or $Units='Seconds'">
+                    <xsl:value-of select="$RawInterval"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Minutes'">
+                    <xsl:value-of select="$RawInterval*60"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Hours'">
+                    <xsl:value-of select="$RawInterval*3600"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Days'">
+                    <xsl:value-of select="$RawInterval*86400"/>
+                  </xsl:when>
+                </xsl:choose>
+              </xsl:element>
+              <xsl:element name="SyncTime">
+                <xsl:value-of select="/SimpleReccuringSchedule/SyncTime"/>
+              </xsl:element>
+            </xsl:template>
+          </xsl:stylesheet>
+        </OutputTransform>
+      </UIPageSet>
+
+      <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection -->
+      <UIPageSet ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection"
+                 TypeDefinitionID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection">
+        <UIPageReferences>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.RuleGeneral.Page"
+                           PageID="MSR!Microsoft.SystemCenter.RuleTemplates.RuleGeneralPage"
+                           Usage="CreationOnly">
+            <InputParameters/>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="Category">
+                    <xsl:copy>PerformanceCollection</xsl:copy>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.Help.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.Knowledge.KnowledgeForType"
+                           Usage="CreationOnly">
+            <InputParameters>
+              <ElementName>Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection</ElementName>
+            </InputParameters>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.ConstructQuery.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.OleDbQuery.ConstructQuery"
+                           Usage="CreationOnly">
+            <InputParameters>
+              <Query><![CDATA[SELECT COUNT(*) AS TableCount FROM INFORMATION_SCHEMA.tables]]></Query>
+              <QueryTimeout>30</QueryTimeout>
+            </InputParameters>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.Schedule.CreatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="CreationOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:attribute name="Unit">Minutes</xsl:attribute>15
+                    </xsl:element>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.PerformanceMapper.Page"
+                           PageID="Windows!Microsoft.Windows.PerformanceMapperPage"
+                           Usage="CreationOnly">
+            <InputParameters>
+              <ObjectName>MyObject</ObjectName>
+              <CounterName>MyCounter</CounterName>
+              <InstanceName>$Data/Columns/Column[1]$</InstanceName>
+              <Value>$Data/Columns/Column[2]$</Value>
+            </InputParameters>
+            <InputTransform/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.OptimizedCollection.Page"
+                           PageID="Perf!System.Performance.OptimizedCollectionPage"
+                           Usage="CreationOnly">
+            <InputParameters/>
+            <InputTransform/>
+          </UIPageReference>
+        </UIPageReferences>
+        <OutputTransform>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+            <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+            <xsl:template match="/">
+              <xsl:element name="Configuration">
+                <xsl:copy-of select="/ID"/>
+                <xsl:copy-of select="/Name"/>
+                <xsl:copy-of select="/Enabled"/>
+                <xsl:copy-of select="/Description"/>
+                <xsl:copy-of select="/Target"/>
+                <xsl:copy-of select="/Category"/>
+                <xsl:copy-of select="/LocaleId"/>
+                <xsl:copy-of select="/ServerName"/>
+                <xsl:copy-of select="/DatabaseName"/>
+                <xsl:copy-of select="/ProviderName"/>
+                <xsl:copy-of select="/Query"/>
+                <xsl:copy-of select="/QueryTimeout"/>
+                <xsl:copy-of select="/RunAsMode"/>
+                <xsl:copy-of select="/ObjectName"/>
+                <xsl:copy-of select="/CounterName"/>
+                <xsl:copy-of select="/InstanceName"/>
+                <xsl:copy-of select="/Value"/>
+                <xsl:element name="IntervalSeconds">
+                  <xsl:variable name="RawInterval" select="/SimpleReccuringSchedule/Interval"/>
+                  <xsl:variable name="Units" select="/SimpleReccuringSchedule/Interval/@Unit"/>
+                  <xsl:choose>
+                    <xsl:when test="not(boolean($Units)) or $Units='Seconds'">
+                      <xsl:value-of select="$RawInterval"/>
+                    </xsl:when>
+                    <xsl:when test="$Units='Minutes'">
+                      <xsl:value-of select="$RawInterval*60"/>
+                    </xsl:when>
+                    <xsl:when test="$Units='Hours'">
+                      <xsl:value-of select="$RawInterval*3600"/>
+                    </xsl:when>
+                    <xsl:when test="$Units='Days'">
+                      <xsl:value-of select="$RawInterval*86400"/>
+                    </xsl:when>
+                  </xsl:choose>
+                </xsl:element>
+                <xsl:element name="SyncTime">
+                  <xsl:value-of select="/SimpleReccuringSchedule/SyncTime"/>
+                </xsl:element>
+                <xsl:copy-of select="/Tolerance"/>
+                <xsl:copy-of select="/ToleranceType"/>
+                <xsl:copy-of select="/MaximumSampleSeparation"/>
+              </xsl:element>
+            </xsl:template>
+          </xsl:stylesheet>
+        </OutputTransform>
+      </UIPageSet>
+      <!-- Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimize -->
+      <UIPageSet ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimize"
+                 TypeDefinitionID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized">
+        <UIPageReferences>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimized.ConstructQuery.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.OleDbQuery.ConstructQuery"
+                           Usage="UpdateOnly">
+            <InputParameters/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimized.Schedule.UpdatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="UpdateOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:value-of select="/IntervalSeconds"/>
+                    </xsl:element>
+                    <xsl:if test="boolean(string-length(/SyncTime))">
+                      <xsl:copy-of select="/SyncTime"/>
+                    </xsl:if>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimized.PerformanceMapper.Page"
+                           PageID="Windows!Microsoft.Windows.PerformanceMapperPage"
+                           Usage="UpdateOnly">
+            <InputParameters/>
+            <InputTransform/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimized.OptimizedCollection.Page"
+                           PageID="Perf!System.Performance.OptimizedCollectionPage"
+                           Usage="UpdateOnly">
+            <InputParameters/>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:copy-of select="/Tolerance"/>
+                  <xsl:copy-of select="/ToleranceType"/>
+                  <xsl:copy-of select="/MaximumSampleSeparation"/>
+                  <xsl:element name="SamplingPeriodInSeconds">
+                    <xsl:value-of select="/IntervalSeconds"/>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>              
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimized.Help.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.Knowledge.KnowledgeForType"
+                           Usage="UpdateOnly">
+            <InputParameters>
+              <ElementName>Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.PerformanceCollection</ElementName>
+            </InputParameters>
+          </UIPageReference>
+        </UIPageReferences>
+        <OutputTransform>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+            <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+            <xsl:template match="/">
+              <xsl:copy-of select="/ServerName"/>
+              <xsl:copy-of select="/DatabaseName"/>
+              <xsl:copy-of select="/ProviderName"/>
+              <xsl:copy-of select="/Query"/>
+              <xsl:copy-of select="/QueryTimeout"/>
+              <xsl:copy-of select="/RunAsMode"/>
+              <xsl:copy-of select="/ObjectName"/>
+              <xsl:copy-of select="/CounterName"/>
+              <xsl:copy-of select="/InstanceName"/>
+              <xsl:copy-of select="/Value"/>
+              <xsl:element name="IntervalSeconds">
+                <xsl:variable name="RawInterval" select="/SimpleReccuringSchedule/Interval"/>
+                <xsl:variable name="Units" select="/SimpleReccuringSchedule/Interval/@Unit"/>
+                <xsl:choose>
+                  <xsl:when test="not(boolean($Units)) or $Units='Seconds'">
+                    <xsl:value-of select="$RawInterval"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Minutes'">
+                    <xsl:value-of select="$RawInterval*60"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Hours'">
+                    <xsl:value-of select="$RawInterval*3600"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Days'">
+                    <xsl:value-of select="$RawInterval*86400"/>
+                  </xsl:when>
+                </xsl:choose>
+              </xsl:element>
+              <xsl:element name="SyncTime">
+                <xsl:value-of select="/SimpleReccuringSchedule/SyncTime"/>
+              </xsl:element>
+              <xsl:copy-of select="/Tolerance"/>
+              <xsl:copy-of select="/ToleranceType"/>
+              <xsl:copy-of select="/MaximumSampleSeparation"/>
+            </xsl:template>
+          </xsl:stylesheet>        
+        </OutputTransform>
+      </UIPageSet>
+      
+      <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule -->
+      <UIPageSet ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule"
+                 TypeDefinitionID="Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule">
+        <UIPageReferences>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.RuleGeneral.Page"
+                           PageID="MSR!Microsoft.SystemCenter.RuleTemplates.RuleGeneralPage"
+                           Usage="CreationOnly">
+            <InputParameters/>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="Category">
+                    <xsl:copy>Alert</xsl:copy>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.Help.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.Knowledge.KnowledgeForType"
+                           Usage="CreationOnly">
+            <InputParameters>
+              <ElementName>Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule</ElementName>
+            </InputParameters>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.ConstructQuery.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.OleDbQuery.ConstructQuery"
+                           Usage="CreationOnly">
+            <InputParameters>
+              <Query><![CDATA[SELECT COUNT(*) AS TableCount FROM INFORMATION_SCHEMA.tables]]></Query>
+              <QueryTimeout>30</QueryTimeout>
+              <NumSamples>1</NumSamples>
+            </InputParameters>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.Schedule.CreatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="CreationOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:attribute name="Unit">Minutes</xsl:attribute>15
+                    </xsl:element>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.Template.DatabaseOleDBQuery.AlertGeneratingRule.SchedulerFilter.Page"
+                           PageID="System!System.SchedulerFilterPage"
+                           Usage="CreationOnly">
+            <InputParameters/>
+            <InputTransform/>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.Expression.Page"
+                           PageID="System!System.ExpressionBuilderPage"
+                           Usage="CreationOnly">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="Expression">
+                    <xsl:element name="SimpleExpression">
+                      <xsl:element name="ValueExpression">
+                        <xsl:element name="XPathQuery">Columns/Column[1]</xsl:element>
+                      </xsl:element>
+                      <xsl:element name="Operator">Equal</xsl:element>
+                      <xsl:element name="ValueExpression">
+                        <xsl:element name="Value">Error</xsl:element>
+                      </xsl:element>
+                    </xsl:element>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <Title ID="Title"/>
+            <SubTitle ID="SubTitle"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.AlertConfig.Page"
+                           PageID="Health!System.Health.GenerateAlertModuleConfigPage"
+                           Usage="CreationOnly">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform/>
+          </UIPageReference>
+        </UIPageReferences>
+        <OutputTransform>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+            <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+            <xsl:template match="/">
+              <xsl:element name="Configuration">
+                <xsl:copy-of select="/ID"/>
+                <xsl:copy-of select="/Name"/>
+                <xsl:copy-of select="/Enabled"/>
+                <xsl:copy-of select="/Description"/>
+                <xsl:copy-of select="/Target"/>
+                <xsl:copy-of select="/Category"/>
+                <xsl:copy-of select="/LocaleId"/>
+                <xsl:copy-of select="/ServerName"/>
+                <xsl:copy-of select="/DatabaseName"/>
+                <xsl:copy-of select="/ProviderName"/>
+                <xsl:copy-of select="/Query"/>
+                <xsl:copy-of select="/QueryTimeout"/>
+                <xsl:copy-of select="/NumSamples"/>
+                <xsl:copy-of select="/RunAsMode"/>
+                <xsl:element name="SchedulerFilter">
+                  <xsl:copy-of select="/SchedulerFilter/*"/>
+                </xsl:element>
+                <xsl:element name="Expression">
+                  <xsl:copy-of select="/Expression[1]/*"/>
+                </xsl:element>
+                <xsl:element name="IntervalSeconds">
+                  <xsl:variable name="RawInterval" select="/SimpleReccuringSchedule/Interval"/>
+                  <xsl:variable name="Units" select="/SimpleReccuringSchedule/Interval/@Unit"/>
+                  <xsl:choose>
+                    <xsl:when test="not(boolean($Units)) or $Units='Seconds'">
+                      <xsl:value-of select="$RawInterval"/>
+                    </xsl:when>
+                    <xsl:when test="$Units='Minutes'">
+                      <xsl:value-of select="$RawInterval*60"/>
+                    </xsl:when>
+                    <xsl:when test="$Units='Hours'">
+                      <xsl:value-of select="$RawInterval*3600"/>
+                    </xsl:when>
+                    <xsl:when test="$Units='Days'">
+                      <xsl:value-of select="$RawInterval*86400"/>
+                    </xsl:when>
+                  </xsl:choose>
+                </xsl:element>
+                <xsl:element name="SyncTime">
+                  <xsl:value-of select="/SimpleReccuringSchedule/SyncTime"/>
+                </xsl:element>
+                <xsl:copy-of select="/Priority"/>
+                <xsl:copy-of select="/Severity"/>
+                <xsl:copy-of select="/AlertName"/>
+                <xsl:copy-of select="/AlertDescription"/>
+                <xsl:copy-of select="/AlertOwner"/>
+                <xsl:copy-of select="/AlertParameters"/>
+                <xsl:copy-of select="/Suppression"/>
+                <xsl:copy-of select="/Custom1"/>
+                <xsl:copy-of select="/Custom2"/>
+                <xsl:copy-of select="/Custom3"/>
+                <xsl:copy-of select="/Custom4"/>
+                <xsl:copy-of select="/Custom5"/>
+                <xsl:copy-of select="/Custom6"/>
+                <xsl:copy-of select="/Custom7"/>
+                <xsl:copy-of select="/Custom8"/>
+                <xsl:copy-of select="/Custom9"/>
+                <xsl:copy-of select="/Custom10"/>
+              </xsl:element>
+            </xsl:template>
+          </xsl:stylesheet>
+        </OutputTransform>
+      </UIPageSet>
+      <!-- Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression -->
+      <UIPageSet ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression"
+                 TypeDefinitionID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression">
+        <UIPageReferences>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression.ConstructQuery.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.OleDbQuery.ConstructQuery"
+                           Usage="UpdateOnly">
+            <InputParameters/>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression.Schedule.UpdatePage"
+                           PageID="System!System.SimpleSchedulerPage"
+                           Usage="UpdateOnly">
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SimpleReccuringSchedule">
+                    <xsl:element name="Interval">
+                      <xsl:value-of select="/IntervalSeconds"/>
+                    </xsl:element>
+                    <xsl:if test="boolean(string-length(/SyncTime))">
+                      <xsl:copy-of select="/SyncTime"/>
+                    </xsl:if>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression.SchedulerFilter.Page"
+                           PageID="System!System.SchedulerFilterPage"
+                           Usage="UpdateOnly">
+            <InputParameters/>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:element name="SchedulerFilter">
+                    <xsl:copy-of select="/SchedulerFilter/*"/>
+                  </xsl:element>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression.Expression.Page"
+                           PageID="System!System.ExpressionBuilderPage"
+                           Usage="UpdateOnly">
+            <InputParameters>
+              <DataType>System.OleDbData</DataType>
+            </InputParameters>
+            <InputTransform>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+                <xsl:template match="/">
+                  <xsl:choose>
+                    <xsl:when test="count(/Expression) &gt; 0">
+                      <xsl:element name="Expression">
+                        <xsl:copy-of select="/Expression/*"/>
+                      </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:element name="Expression">
+                        <xsl:element name="SimpleExpression">
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="XPathQuery">Columns/Column[1]</xsl:element>
+                          </xsl:element>
+                          <xsl:element name="Operator">Equal</xsl:element>
+                          <xsl:element name="ValueExpression">
+                            <xsl:element name="Value">Error</xsl:element>
+                          </xsl:element>
+                        </xsl:element>
+                      </xsl:element>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:template>
+              </xsl:stylesheet>
+            </InputTransform>
+            <TabName ID="TabName"/>
+          </UIPageReference>
+          <UIPageReference ID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression.Help.Page"
+                           PageID="Test.SqlMonitor.MP.UIPage.Knowledge.KnowledgeForType"
+                           Usage="UpdateOnly">
+            <InputParameters>
+              <ElementName>Test.SqlMonitor.MP.Template.DatabaseOleDBQuery.AlertGeneratingRule</ElementName>
+            </InputParameters>
+          </UIPageReference>
+        </UIPageReferences>
+        <OutputTransform>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+            <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+            <xsl:template match="/">
+              <xsl:copy-of select="/ServerName"/>
+              <xsl:copy-of select="/DatabaseName"/>
+              <xsl:copy-of select="/ProviderName"/>
+              <xsl:copy-of select="/Query"/>
+              <xsl:element name="OneRowPerItem">true</xsl:element>
+              <xsl:copy-of select="/QueryTimeout"/>
+              <xsl:copy-of select="/NumSamples"/>
+              <xsl:copy-of select="/RunAsMode"/>
+              <xsl:element name="SchedulerFilter">
+                <xsl:copy-of select="/SchedulerFilter/*"/>
+              </xsl:element>
+              <xsl:element name="Expression">
+                <xsl:copy-of select="/Expression[1]/*"/>
+              </xsl:element>
+              <xsl:element name="IntervalSeconds">
+                <xsl:variable name="RawInterval" select="/SimpleReccuringSchedule/Interval"/>
+                <xsl:variable name="Units" select="/SimpleReccuringSchedule/Interval/@Unit"/>
+                <xsl:choose>
+                  <xsl:when test="not(boolean($Units)) or $Units='Seconds'">
+                    <xsl:value-of select="$RawInterval"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Minutes'">
+                    <xsl:value-of select="$RawInterval*60"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Hours'">
+                    <xsl:value-of select="$RawInterval*3600"/>
+                  </xsl:when>
+                  <xsl:when test="$Units='Days'">
+                    <xsl:value-of select="$RawInterval*86400"/>
+                  </xsl:when>
+                </xsl:choose>
+              </xsl:element>
+              <xsl:element name="SyncTime">
+                <xsl:value-of select="/SimpleReccuringSchedule/SyncTime"/>
+              </xsl:element>
+            </xsl:template>
+          </xsl:stylesheet>
+        </OutputTransform>      
+      </UIPageSet>
+      
+    </UIPageSets>
+  </PresentationTypes>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState -->
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.ConstructQuery.Page" SubElementID="Title">
+          <Name>Construct Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.ConstructQuery.Page" SubElementID="SubTitle">
+          <Name>Construct Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.ConstructQuery.Page" SubElementID="TabName">
+          <Name>Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.SchedulerFilter.Page" SubElementID="Title">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.SchedulerFilter.Page" SubElementID="SubTitle">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.SchedulerFilter.Page" SubElementID="TabName">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.UnhealthyExpression.Page" SubElementID="Title">
+          <Name>Error Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.UnhealthyExpression.Page" SubElementID="SubTitle">
+          <Name>Error Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.UnhealthyExpression.Page" SubElementID="TabName">
+          <Name>Error Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.HealthyExpression.Page" SubElementID="Title">
+          <Name>Success Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.HealthyExpression.Page" SubElementID="SubTitle">
+          <Name>Success Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.TwoState.HealthyExpression.Page" SubElementID="TabName">
+          <Name>Success Expression</Name>
+        </DisplayString>
+
+        <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState -->
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.ConstructQuery.Page" SubElementID="Title">
+          <Name>Construct Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.ConstructQuery.Page" SubElementID="SubTitle">
+          <Name>Construct Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.ConstructQuery.Page" SubElementID="TabName">
+          <Name>Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.SchedulerFilter.Page" SubElementID="Title">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.SchedulerFilter.Page" SubElementID="SubTitle">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.SchedulerFilter.Page" SubElementID="TabName">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.UnhealthyExpression.Page" SubElementID="Title">
+          <Name>Error Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.UnhealthyExpression.Page" SubElementID="SubTitle">
+          <Name>Error Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.UnhealthyExpression.Page" SubElementID="TabName">
+          <Name>Error Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.WarningExpression.Page" SubElementID="Title">
+          <Name>Warning Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.WarningExpression.Page" SubElementID="SubTitle">
+          <Name>Warning Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.WarningExpression.Page" SubElementID="TabName">
+          <Name>Warning Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.HealthyExpression.Page" SubElementID="Title">
+          <Name>Success Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.HealthyExpression.Page" SubElementID="SubTitle">
+          <Name>Success Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.ThreeState.HealthyExpression.Page" SubElementID="TabName">
+          <Name>Success Expression</Name>
+        </DisplayString>
+
+        <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection -->
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.ConstructQuery.Page" SubElementID="Title">
+          <Name>Construct Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.PerformanceCollection.ConstructQuery.Page" SubElementID="SubTitle">
+          <Name>Construct Query</Name>
+        </DisplayString>
+
+        <!-- Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimize -->
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.Performance.Optimized.ConstructQuery.Page" SubElementID="TabName">
+          <Name>Query</Name>
+        </DisplayString>
+        
+      <!-- Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule -->
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.ConstructQuery.Page" SubElementID="Title">
+          <Name>Construct Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.ConstructQuery.Page" SubElementID="SubTitle">
+          <Name>Construct Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.Template.DatabaseOleDBQuery.AlertGeneratingRule.SchedulerFilter.Page" SubElementID="Title">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.Template.DatabaseOleDBQuery.AlertGeneratingRule.SchedulerFilter.Page" SubElementID="SubTitle">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.Expression.Page" SubElementID="Title">
+          <Name>Expression</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DatabaseOleDBQuery.AlertGeneratingRule.Expression.Page" SubElementID="SubTitle">
+          <Name>Expression</Name>
+        </DisplayString>
+        
+        <!-- Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression -->
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression.ConstructQuery.Page" SubElementID="TabName">
+          <Name>Query</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UIPageSet.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression.SchedulerFilter.Page" SubElementID="TabName">
+          <Name>Scheduler Filter</Name>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>
