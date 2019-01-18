@@ -1,4 +1,5 @@
-﻿using Microsoft.EnterpriseManagement.Configuration;
+﻿using Microsoft.EnterpriseManagement.Common;
+using Microsoft.EnterpriseManagement.Configuration;
 using Microsoft.EnterpriseManagement.Mom.Internal.UI.Common;
 using Microsoft.EnterpriseManagement.Mom.Internal.UI.Controls;
 using Microsoft.EnterpriseManagement.UI;
@@ -10,6 +11,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using Test.SqlMonitor.UI.Code;
 
 namespace Test.SqlMonitor.UI.Pages.OleDbQuery
 {
@@ -18,6 +20,9 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
         private const string runAsImpersonationProfileString = "Integrated Security=SSPI";
         private const string runAsSimpleProfileName = "Test.SqlMonitor.MP.SecureReference.OleDbQuery.SimpleRunAsProfile";
         private const string runAsSimpleProfileString = "User Id=$RunAs[Name=\"{0}\"]/UserName$;Password=$RunAs[Name=\"{0}\"]/Password$";
+
+        private bool pageLock;
+        private bool PageLock { set { pageLock = value; ValidatePage(); } }
 
         private string ServerName { get { return (txtServerName.Text ?? string.Empty).Trim(); } set { txtServerName.Text = value; } }
         private string DatabaseName { get { return (txtDatabaseName.Text ?? string.Empty).Trim(); } set { txtDatabaseName.Text = value; } }
@@ -138,6 +143,11 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
         #region Methods
         private bool ValidatePage()
         {
+            if (pageLock)
+            {
+                return IsConfigValid = false;
+            }
+
             if (string.IsNullOrEmpty(ServerName))
             {
                 return IsConfigValid = false;
@@ -216,6 +226,36 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
                 }
             }
         }
+
+        private void DisplayTaskXmlModal(string xml)
+        {
+            XmlDocument doc = new XmlDocument();            
+            try
+            {
+                doc.LoadXml(xml);
+                doc.InsertBefore(doc.CreateXmlDeclaration("1.0", string.Empty, string.Empty), doc.DocumentElement);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid xml: " + xml, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (Form form = new Form())
+            {
+                form.Width = 600;
+                form.Height = 500;
+                form.MinimizeBox = false;
+                WebBrowser webBrowser = new WebBrowser();
+                webBrowser.Dock = DockStyle.Fill;
+                webBrowser.IsWebBrowserContextMenuEnabled = false;
+                webBrowser.AllowNavigation = false;
+                webBrowser.AllowWebBrowserDrop = false;
+                webBrowser.DocumentText = doc.OuterXml;
+                form.Controls.Add(webBrowser);
+                form.ShowDialog();
+            }
+        }
         #endregion
 
         #region EventHanders
@@ -240,6 +280,69 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
             var button = (Button)sender;
             this.paramsSelector.Tag = button.Tag;
             ShowProperties((Button)sender, this.paramsSelector);
+        }
+
+        private void btnRunTestTask_Click(object sender, EventArgs e)
+        {
+            if (!ValidatePage()) { return; }
+
+            btnRunTestTask.Enabled = false;
+            btnRunTestTask.Text = "Please wait";
+            PageLock = true;
+
+            bgwRunTestTask.RunWorkerAsync(
+                (object)new string[]
+                {
+                    string.Format("Provider={0};Data Source={1};Initial Catalog={2};Integrated Security=SSPI",
+                    ProviderName, ServerName, DatabaseName),
+                    Query,
+                    "60"
+                });
+        }
+
+        private void bgwRunTestTask_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            TaskRunnerHelper taskRunner = new TaskRunnerHelper(this.ManagementGroup);
+            var parameters = (string[])e.Argument;
+            var result = taskRunner.RunTestTask(
+                parameters[0], parameters[1], int.Parse(parameters[2]));
+            e.Result = result;
+        }
+
+        private void bgwRunTestTask_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    MessageBox.Show(
+                        e.Error.Message,
+                        "Failed to run test task",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+
+                var result = (Microsoft.EnterpriseManagement.Runtime.TaskResult)e.Result;
+                if (result == null || result.Status != Microsoft.EnterpriseManagement.Runtime.TaskStatus.Succeeded)
+                {
+                    MessageBox.Show(
+                        result?.ErrorMessage ?? "Unspecified error",
+                        "Failed to complete test task",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                else
+                {
+                    DisplayTaskXmlModal(result.Output);
+                }
+            }
+            finally
+            {
+                PageLock = false;
+                btnRunTestTask.Text = "Test query";
+                btnRunTestTask.Enabled = true;
+            }
         }
         #endregion
     }

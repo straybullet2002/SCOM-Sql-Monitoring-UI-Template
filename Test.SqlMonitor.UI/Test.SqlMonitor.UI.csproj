@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libraries\Microsoft.EnterpriseManagement.OperationsManager.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.EnterpriseManagement.Runtime, Version=7.0.5000.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\Microsoft.EnterpriseManagement.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.EnterpriseManagement.UI.Authoring">
       <HintPath>..\..\Libraries\Microsoft.EnterpriseManagement.UI.Authoring.dll</HintPath>
     </Reference>
@@ -68,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\MPGuidReference.cs" />
+    <Compile Include="Code\TaskRunnerHelper.cs" />
     <Compile Include="Pages\Knowledge\KnowledgeForType.cs">
       <SubType>UserControl</SubType>
     </Compile>

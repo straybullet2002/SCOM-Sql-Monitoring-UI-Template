@@ -1,0 +1,32 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Tasks>
+
+      <!-- Test.SqlMonitor.MP.AgentTask.OleDbTest -->
+      <Task ID="Test.SqlMonitor.MP.AgentTask.OleDbTest" Accessibility="Internal"
+            Enabled="true" Timeout="300" Remotable="true"
+            Target="SC!Microsoft.SystemCenter.AllManagementServersPool">
+        <Category>Maintenance</Category>
+        <ProbeAction ID="Probe" TypeID="System!System.OleDbTriggerProbe">
+          <ConnectionString>ConnectionString</ConnectionString>
+          <Query>Query</Query>
+          <GetValue>true</GetValue>
+          <OneRowPerItem>true</OneRowPerItem>
+          <QueryTimeout>60</QueryTimeout>
+          <GetFetchTime>true</GetFetchTime>
+        </ProbeAction>
+      </Task>
+        
+    </Tasks>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="Test.SqlMonitor.MP.AgentTask.OleDbTest">
+          <Name>OleDb Query Internal Task</Name>
+          <Description>Not intended to run manually</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -44,6 +44,8 @@
             this.cbRunAsMode = new System.Windows.Forms.CheckBox();
             this.cmbProvider = new System.Windows.Forms.ComboBox();
             this.lbProvider = new System.Windows.Forms.Label();
+            this.btnRunTestTask = new System.Windows.Forms.Button();
+            this.bgwRunTestTask = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.numNumSamples)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,9 +65,8 @@
             // rtbQuery
             // 
             this.rtbQuery.AcceptsTab = true;
-            this.rtbQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbQuery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.rtbQuery.Location = new System.Drawing.Point(14, 196);
             this.rtbQuery.Name = "rtbQuery";
             this.rtbQuery.Size = new System.Drawing.Size(436, 166);
@@ -221,10 +222,27 @@
             this.lbProvider.TabIndex = 25;
             this.lbProvider.Text = "Provider:";
             // 
+            // btnRunTestTask
+            // 
+            this.btnRunTestTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRunTestTask.Location = new System.Drawing.Point(366, 366);
+            this.btnRunTestTask.Name = "btnRunTestTask";
+            this.btnRunTestTask.Size = new System.Drawing.Size(84, 23);
+            this.btnRunTestTask.TabIndex = 26;
+            this.btnRunTestTask.Text = "Test query";
+            this.btnRunTestTask.UseVisualStyleBackColor = true;
+            this.btnRunTestTask.Click += new System.EventHandler(this.btnRunTestTask_Click);
+            // 
+            // bgwRunTestTask
+            // 
+            this.bgwRunTestTask.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwRunTestTask_DoWork);
+            this.bgwRunTestTask.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwRunTestTask_RunWorkerCompleted);
+            // 
             // ConstructQuery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRunTestTask);
             this.Controls.Add(this.lbProvider);
             this.Controls.Add(this.cmbProvider);
             this.Controls.Add(this.cbRunAsMode);
@@ -242,7 +260,7 @@
             this.Controls.Add(this.rtbQuery);
             this.Controls.Add(this.pageSectionLabel);
             this.Name = "ConstructQuery";
-            this.Size = new System.Drawing.Size(460, 377);
+            this.Size = new System.Drawing.Size(460, 393);
             ((System.ComponentModel.ISupportInitialize)(this.numNumSamples)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -267,5 +285,7 @@
         private System.Windows.Forms.CheckBox cbRunAsMode;
         private System.Windows.Forms.ComboBox cmbProvider;
         private System.Windows.Forms.Label lbProvider;
+        private System.Windows.Forms.Button btnRunTestTask;
+        private System.ComponentModel.BackgroundWorker bgwRunTestTask;
     }
 }
