@@ -11,17 +11,10 @@ The Management Pack for SCOM 2012R2+ enables you to create SQL-based monitors an
 2. Import the management pack into SCOM
 3. Depending on chosen authentication method create Windows or Simple Run As account and bind it to "Impersonation Run As Profile (OleDb)" or "Simple Run As Profile (OleDb)" respectively
 
+
 Template locations:
 ![Template locations](/Images/MonitorsAndRules.jpg?raw=true)
-
-Query and connection:
 ![Query and connection](/Images/ConstructQuery.jpg?raw=true)
-
-Schedule filtering:
 ![Schedule filtering](/Images/MonitorScheduleFilter.jpg?raw=true)
-
-Expression filtering:
 ![Expression filtering](/Images/MonitorExpressionError.jpg?raw=true)
-
-Alert configuration:
 ![Alert configuration](/Images/MonitorAlert.jpg?raw=true)
