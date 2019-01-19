@@ -65,8 +65,9 @@
             // rtbQuery
             // 
             this.rtbQuery.AcceptsTab = true;
-            this.rtbQuery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.rtbQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbQuery.Location = new System.Drawing.Point(14, 196);
             this.rtbQuery.Name = "rtbQuery";
             this.rtbQuery.Size = new System.Drawing.Size(436, 166);
@@ -224,7 +225,7 @@
             // 
             // btnRunTestTask
             // 
-            this.btnRunTestTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRunTestTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRunTestTask.Location = new System.Drawing.Point(366, 366);
             this.btnRunTestTask.Name = "btnRunTestTask";
             this.btnRunTestTask.Size = new System.Drawing.Size(84, 23);
