@@ -11,6 +11,7 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
         public string ServerName { get; set; }
         public string DatabaseName { get; set; }
         public string ProviderName { get; set; }
+        public string ConnectionStringOptions { get; set; }
         public string Query { get; set; }
         public int QueryTimeout { get; set; }
         public int NumSamples { get; set; } // Pass zero value to disable control

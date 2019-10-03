@@ -46,6 +46,8 @@
             this.lbProvider = new System.Windows.Forms.Label();
             this.btnRunTestTask = new System.Windows.Forms.Button();
             this.bgwRunTestTask = new System.ComponentModel.BackgroundWorker();
+            this.lblConnectionStringOptions = new System.Windows.Forms.Label();
+            this.txtConnectionStringOptions = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numNumSamples)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,9 +70,9 @@
             this.rtbQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbQuery.Location = new System.Drawing.Point(14, 196);
+            this.rtbQuery.Location = new System.Drawing.Point(14, 235);
             this.rtbQuery.Name = "rtbQuery";
-            this.rtbQuery.Size = new System.Drawing.Size(436, 166);
+            this.rtbQuery.Size = new System.Drawing.Size(436, 169);
             this.rtbQuery.TabIndex = 11;
             this.rtbQuery.Text = "";
             this.rtbQuery.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
@@ -78,7 +80,7 @@
             // lbQuery
             // 
             this.lbQuery.AutoSize = true;
-            this.lbQuery.Location = new System.Drawing.Point(11, 179);
+            this.lbQuery.Location = new System.Drawing.Point(11, 219);
             this.lbQuery.Name = "lbQuery";
             this.lbQuery.Size = new System.Drawing.Size(38, 13);
             this.lbQuery.TabIndex = 12;
@@ -87,6 +89,7 @@
             // txtServerName
             // 
             this.txtServerName.Location = new System.Drawing.Point(14, 57);
+            this.txtServerName.MaxLength = 300;
             this.txtServerName.Name = "txtServerName";
             this.txtServerName.Size = new System.Drawing.Size(203, 20);
             this.txtServerName.TabIndex = 13;
@@ -113,6 +116,7 @@
             // txtDatabaseName
             // 
             this.txtDatabaseName.Location = new System.Drawing.Point(258, 57);
+            this.txtDatabaseName.MaxLength = 300;
             this.txtDatabaseName.Name = "txtDatabaseName";
             this.txtDatabaseName.Size = new System.Drawing.Size(166, 20);
             this.txtDatabaseName.TabIndex = 15;
@@ -226,7 +230,7 @@
             // btnRunTestTask
             // 
             this.btnRunTestTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRunTestTask.Location = new System.Drawing.Point(366, 366);
+            this.btnRunTestTask.Location = new System.Drawing.Point(366, 408);
             this.btnRunTestTask.Name = "btnRunTestTask";
             this.btnRunTestTask.Size = new System.Drawing.Size(84, 23);
             this.btnRunTestTask.TabIndex = 26;
@@ -239,10 +243,29 @@
             this.bgwRunTestTask.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwRunTestTask_DoWork);
             this.bgwRunTestTask.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwRunTestTask_RunWorkerCompleted);
             // 
+            // lblConnectionStringOptions
+            // 
+            this.lblConnectionStringOptions.AutoSize = true;
+            this.lblConnectionStringOptions.Location = new System.Drawing.Point(11, 177);
+            this.lblConnectionStringOptions.Name = "lblConnectionStringOptions";
+            this.lblConnectionStringOptions.Size = new System.Drawing.Size(195, 13);
+            this.lblConnectionStringOptions.TabIndex = 27;
+            this.lblConnectionStringOptions.Text = "Additional connection string parameters:";
+            // 
+            // txtConnectionStringOptions
+            // 
+            this.txtConnectionStringOptions.Location = new System.Drawing.Point(14, 193);
+            this.txtConnectionStringOptions.MaxLength = 400;
+            this.txtConnectionStringOptions.Name = "txtConnectionStringOptions";
+            this.txtConnectionStringOptions.Size = new System.Drawing.Size(436, 20);
+            this.txtConnectionStringOptions.TabIndex = 28;
+            // 
             // ConstructQuery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtConnectionStringOptions);
+            this.Controls.Add(this.lblConnectionStringOptions);
             this.Controls.Add(this.btnRunTestTask);
             this.Controls.Add(this.lbProvider);
             this.Controls.Add(this.cmbProvider);
@@ -261,7 +284,7 @@
             this.Controls.Add(this.rtbQuery);
             this.Controls.Add(this.pageSectionLabel);
             this.Name = "ConstructQuery";
-            this.Size = new System.Drawing.Size(460, 393);
+            this.Size = new System.Drawing.Size(460, 435);
             ((System.ComponentModel.ISupportInitialize)(this.numNumSamples)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -288,5 +311,7 @@
         private System.Windows.Forms.Label lbProvider;
         private System.Windows.Forms.Button btnRunTestTask;
         private System.ComponentModel.BackgroundWorker bgwRunTestTask;
+        private System.Windows.Forms.Label lblConnectionStringOptions;
+        private System.Windows.Forms.TextBox txtConnectionStringOptions;
     }
 }

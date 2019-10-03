@@ -189,6 +189,9 @@
               <xsl:element name="ProviderName">
                 <xsl:value-of select="/ProviderName"/>
               </xsl:element>
+              <xsl:if test="boolean(string-length(/ConnectionStringOptions))">
+                <xsl:copy-of select="/ConnectionStringOptions"/>
+              </xsl:if>
               <xsl:element name="Query">
                 <xsl:value-of select="/Query"/>
               </xsl:element>
@@ -461,6 +464,9 @@
               <xsl:element name="ProviderName">
                 <xsl:value-of select="/ProviderName"/>
               </xsl:element>
+              <xsl:if test="boolean(string-length(/ConnectionStringOptions))">
+                <xsl:copy-of select="/ConnectionStringOptions"/>
+              </xsl:if>
               <xsl:element name="Query">
                 <xsl:value-of select="/Query"/>
               </xsl:element>
@@ -596,6 +602,9 @@
                 <xsl:copy-of select="/ServerName"/>
                 <xsl:copy-of select="/DatabaseName"/>
                 <xsl:copy-of select="/ProviderName"/>
+                <xsl:if test="boolean(string-length(/ConnectionStringOptions))">
+                  <xsl:copy-of select="/ConnectionStringOptions"/>
+                </xsl:if>
                 <xsl:copy-of select="/Query"/>
                 <xsl:copy-of select="/QueryTimeout"/>
                 <xsl:copy-of select="/RunAsMode"/>
@@ -700,6 +709,9 @@
               <xsl:copy-of select="/ServerName"/>
               <xsl:copy-of select="/DatabaseName"/>
               <xsl:copy-of select="/ProviderName"/>
+              <xsl:if test="boolean(string-length(/ConnectionStringOptions))">
+                <xsl:copy-of select="/ConnectionStringOptions"/>
+              </xsl:if>
               <xsl:copy-of select="/Query"/>
               <xsl:copy-of select="/QueryTimeout"/>
               <xsl:copy-of select="/RunAsMode"/>
@@ -848,6 +860,9 @@
                 <xsl:copy-of select="/ServerName"/>
                 <xsl:copy-of select="/DatabaseName"/>
                 <xsl:copy-of select="/ProviderName"/>
+                <xsl:if test="boolean(string-length(/ConnectionStringOptions))">
+                  <xsl:copy-of select="/ConnectionStringOptions"/>
+                </xsl:if>
                 <xsl:copy-of select="/Query"/>
                 <xsl:copy-of select="/QueryTimeout"/>
                 <xsl:copy-of select="/NumSamples"/>
@@ -996,6 +1011,9 @@
               <xsl:copy-of select="/ServerName"/>
               <xsl:copy-of select="/DatabaseName"/>
               <xsl:copy-of select="/ProviderName"/>
+              <xsl:if test="boolean(string-length(/ConnectionStringOptions))">
+                <xsl:copy-of select="/ConnectionStringOptions"/>
+              </xsl:if>
               <xsl:copy-of select="/Query"/>
               <xsl:element name="OneRowPerItem">true</xsl:element>
               <xsl:copy-of select="/QueryTimeout"/>

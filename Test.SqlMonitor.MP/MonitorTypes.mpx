@@ -15,6 +15,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />          
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
           <xsd:element name="NumSamples" type="xsd:int" />
@@ -47,6 +48,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>          
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
           <OverrideableParameter ID="NumSamples" Selector="$Config/NumSamples$" ParameterType="int"/>
@@ -59,6 +61,7 @@
               <ServerName>$Config/ServerName$</ServerName>
               <DatabaseName>$Config/DatabaseName$</DatabaseName>
               <ProviderName>$Config/ProviderName$</ProviderName>
+              <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
               <Query>$Config/Query$</Query>
               <OneRowPerItem>true</OneRowPerItem>
               <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -73,6 +76,7 @@
               <ServerName>$Config/ServerName$</ServerName>
               <DatabaseName>$Config/DatabaseName$</DatabaseName>
               <ProviderName>$Config/ProviderName$</ProviderName>
+              <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
               <Query>$Config/Query$</Query>
               <OneRowPerItem>true</OneRowPerItem>
               <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -109,6 +113,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />          
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
           <xsd:element name="NumSamples" type="xsd:int" />
@@ -142,6 +147,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>          
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
           <OverrideableParameter ID="NumSamples" Selector="$Config/NumSamples$" ParameterType="int"/>
@@ -154,6 +160,7 @@
               <ServerName>$Config/ServerName$</ServerName>
               <DatabaseName>$Config/DatabaseName$</DatabaseName>
               <ProviderName>$Config/ProviderName$</ProviderName>
+              <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
               <Query>$Config/Query$</Query>
               <OneRowPerItem>true</OneRowPerItem>
               <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -168,6 +175,7 @@
               <ServerName>$Config/ServerName$</ServerName>
               <DatabaseName>$Config/DatabaseName$</DatabaseName>
               <ProviderName>$Config/ProviderName$</ProviderName>
+              <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
               <Query>$Config/Query$</Query>
               <OneRowPerItem>true</OneRowPerItem>
               <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -182,6 +190,7 @@
               <ServerName>$Config/ServerName$</ServerName>
               <DatabaseName>$Config/DatabaseName$</DatabaseName>
               <ProviderName>$Config/ProviderName$</ProviderName>
+              <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
               <Query>$Config/Query$</Query>
               <OneRowPerItem>true</OneRowPerItem>
               <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -228,6 +237,10 @@
         <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="DatabaseName">
           <Name>Database Name</Name>
         </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="ConnectionStringOptions">
+          <Name>Connection String Options</Name>
+          <Description>Additional connection string parameters</Description>
+        </DisplayString>
         <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.TwoState" SubElementID="Query">
           <Name>Query</Name>
         </DisplayString>
@@ -261,6 +274,10 @@
         </DisplayString>
         <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="DatabaseName">
           <Name>Database Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="ConnectionStringOptions">
+          <Name>Connection String Options</Name>
+          <Description>Additional connection string parameters</Description>
         </DisplayString>
         <DisplayString ElementID="Test.SqlMonitor.MP.UnitMonitorType.DatabaseOleDBQuery.ThreeState" SubElementID="Query">
           <Name>Query</Name>

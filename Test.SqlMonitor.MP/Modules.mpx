@@ -8,6 +8,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="OneRowPerItem" type="xsd:boolean" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
@@ -18,6 +19,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
@@ -35,6 +37,7 @@
                 <ServerName>$Config/ServerName$</ServerName>
                 <DatabaseName>$Config/DatabaseName$</DatabaseName>
                 <ProviderName>$Config/ProviderName$</ProviderName>
+                <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
                 <Query>$Config/Query$</Query>
                 <OneRowPerItem>$Config/OneRowPerItem$</OneRowPerItem>
                 <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -60,6 +63,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="OneRowPerItem" type="xsd:boolean" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
@@ -90,6 +94,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
@@ -107,6 +112,7 @@
                 <ServerName>$Config/ServerName$</ServerName>
                 <DatabaseName>$Config/DatabaseName$</DatabaseName>
                 <ProviderName>$Config/ProviderName$</ProviderName>
+                <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
                 <Query>$Config/Query$</Query>
                 <OneRowPerItem>$Config/OneRowPerItem$</OneRowPerItem>
                 <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -137,6 +143,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="OneRowPerItem" type="xsd:boolean" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
@@ -169,6 +176,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>          
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
@@ -183,6 +191,7 @@
                 <ServerName>$Config/ServerName$</ServerName>
                 <DatabaseName>$Config/DatabaseName$</DatabaseName>
                 <ProviderName>$Config/ProviderName$</ProviderName>
+                <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
                 <Query>$Config/Query$</Query>
                 <OneRowPerItem>$Config/OneRowPerItem$</OneRowPerItem>
                 <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -215,6 +224,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
           <xsd:element name="RunAsMode" type="xsd:string" />
@@ -228,6 +238,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
           <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
@@ -240,6 +251,7 @@
                 <ServerName>$Config/ServerName$</ServerName>
                 <DatabaseName>$Config/DatabaseName$</DatabaseName>
                 <ProviderName>$Config/ProviderName$</ProviderName>
+                <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
                 <Query>$Config/Query$</Query>
                 <OneRowPerItem>true</OneRowPerItem>
                 <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
@@ -285,6 +297,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
           <xsd:element name="RunAsMode" type="xsd:string" />
@@ -308,6 +321,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
           <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
@@ -322,6 +336,7 @@
                 <ServerName>$Config/ServerName$</ServerName>
                 <DatabaseName>$Config/DatabaseName$</DatabaseName>
                 <ProviderName>$Config/ProviderName$</ProviderName>
+                <ConnectionStringOptions>$Config/ConnectionStringOptions$</ConnectionStringOptions>
                 <Query>$Config/Query$</Query>
                 <QueryTimeout>$Config/QueryTimeout$</QueryTimeout>
                 <RunAsMode>$Config/RunAsMode$</RunAsMode>
@@ -356,6 +371,7 @@
           <xsd:element name="ServerName" type="xsd:string" />
           <xsd:element name="DatabaseName" type="xsd:string" />
           <xsd:element name="ProviderName" type="xsd:string" />
+          <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
           <xsd:element name="Query" type="xsd:string" />
           <xsd:element name="OneRowPerItem" type="xsd:boolean" />
           <xsd:element name="QueryTimeout" type="xsd:int" />
@@ -364,6 +380,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="ServerName" Selector="$Config/ServerName$" ParameterType="string"/>
           <OverrideableParameter ID="DatabaseName" Selector="$Config/DatabaseName$" ParameterType="string"/>
+          <OverrideableParameter ID="ConnectionStringOptions" Selector="$Config/ConnectionStringOptions$" ParameterType="string"/>
           <OverrideableParameter ID="Query" Selector="$Config/Query$" ParameterType="string"/>
           <OverrideableParameter ID="OneRowPerItem" Selector="$Config/OneRowPerItem$" ParameterType="bool"/>
           <OverrideableParameter ID="QueryTimeout" Selector="$Config/QueryTimeout$" ParameterType="int"/>
@@ -373,7 +390,7 @@
             <MemberModules>
               <ProbeAction ID="PassThru" TypeID="System!System.PassThroughProbe" />
               <ProbeAction ID="OleDbProbe" TypeID="System!System.OleDbProbe">
-                <ConnectionString>Provider=$Config/ProviderName$;Server=$Config/ServerName$;Database=$Config/DatabaseName$;$Config/RunAsMode$</ConnectionString>
+                <ConnectionString>Provider=$Config/ProviderName$;Server=$Config/ServerName$;Database=$Config/DatabaseName$;$Config/RunAsMode$;$Config/ConnectionStringOptions$</ConnectionString>
                 <Query>$Config/Query$</Query>
                 <GetValue>true</GetValue>
                 <IncludeOriginalItem>false</IncludeOriginalItem>
@@ -405,6 +422,10 @@
         <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="DatabaseName">
           <Name>Database Name</Name>
         </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="ConnectionStringOptions">
+          <Name>Connection String Options</Name>
+          <Description>Additional connection string parameters</Description>
+        </DisplayString>        
         <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.Performance.Optimized" SubElementID="Query">
           <Name>Query</Name>
         </DisplayString>
@@ -429,6 +450,10 @@
         </DisplayString>
         <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="DatabaseName">
           <Name>Database Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="ConnectionStringOptions">
+          <Name>Connection String Options</Name>
+          <Description>Additional connection string parameters</Description>
         </DisplayString>
         <DisplayString ElementID="Test.SqlMonitor.MP.DataSource.DatabaseOleDBQuery.WithResults.SchedulerFilter.Expression" SubElementID="Query">
           <Name>Query</Name>

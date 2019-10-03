@@ -26,6 +26,7 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
 
         private string ServerName { get { return (txtServerName.Text ?? string.Empty).Trim(); } set { txtServerName.Text = value; } }
         private string DatabaseName { get { return (txtDatabaseName.Text ?? string.Empty).Trim(); } set { txtDatabaseName.Text = value; } }
+        private string ConnectionStringOptions { get { return (txtConnectionStringOptions.Text ?? string.Empty).Trim(); } set { txtConnectionStringOptions.Text = value; } }
         private int QueryTimeout { get { return iucQueryTimeout.IntervalInBaseUnit; } set { iucQueryTimeout.IntervalInBaseUnit = value; } }
         private int NumSamples { get { return Convert.ToInt32(numNumSamples.Value); } set { numNumSamples.Value = value; } }
         private string Query { get { return (rtbQuery.Text ?? string.Empty).Trim(); } set { rtbQuery.Text = value; } }
@@ -120,6 +121,7 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
             xmlWriter.WriteElementString("ServerName", ServerName);
             xmlWriter.WriteElementString("DatabaseName", DatabaseName);
             xmlWriter.WriteElementString("ProviderName", ProviderName);
+            if (!string.IsNullOrEmpty(ConnectionStringOptions)) { xmlWriter.WriteElementString("ConnectionStringOptions", ConnectionStringOptions); }
             xmlWriter.WriteStartElement("Query");
             xmlWriter.WriteCData(Query);
             xmlWriter.WriteEndElement();
@@ -195,6 +197,7 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
             ServerName = config.ServerName;
             DatabaseName = config.DatabaseName;
             ProviderName = config.ProviderName;
+            ConnectionStringOptions = config.ConnectionStringOptions ?? string.Empty;
             QueryTimeout = config.QueryTimeout;
             if (config.NumSamples == 0)
             {
@@ -293,8 +296,8 @@ namespace Test.SqlMonitor.UI.Pages.OleDbQuery
             bgwRunTestTask.RunWorkerAsync(
                 (object)new string[]
                 {
-                    string.Format("Provider={0};Data Source={1};Initial Catalog={2};Integrated Security=SSPI",
-                    ProviderName, ServerName, DatabaseName),
+                    string.Format("Provider={0};Data Source={1};Initial Catalog={2};Integrated Security=SSPI;{3}",
+                    ProviderName, ServerName, DatabaseName, ConnectionStringOptions),
                     Query,
                     "60"
                 });

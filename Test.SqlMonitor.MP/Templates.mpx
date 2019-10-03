@@ -20,6 +20,7 @@
         <xsd:element name="ServerName" type="xsd:string" />
         <xsd:element name="DatabaseName" type="xsd:string" />
         <xsd:element name="ProviderName" type="xsd:string" />
+        <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
         <xsd:element name="Query" type="xsd:string" />
         <xsd:element name="QueryTimeout" type="xsd:int" />
         <xsd:element name="RunAsMode" type="xsd:string" />
@@ -55,6 +56,7 @@
                   <ServerName>$TemplateConfig/ServerName$</ServerName>
                   <DatabaseName>$TemplateConfig/DatabaseName$</DatabaseName>
                   <ProviderName>$TemplateConfig/ProviderName$</ProviderName>
+                  <ConnectionStringOptions>$TemplateConfig/ConnectionStringOptions$</ConnectionStringOptions>
                   <Query>$TemplateConfig/Query$</Query>
                   <QueryTimeout>$TemplateConfig/QueryTimeout$</QueryTimeout>
                   <RunAsMode>$TemplateConfig/RunAsMode$</RunAsMode>
@@ -108,6 +110,7 @@
         <xsd:element name="ServerName" type="xsd:string" />
         <xsd:element name="DatabaseName" type="xsd:string" />
         <xsd:element name="ProviderName" type="xsd:string" />
+        <xsd:element name="ConnectionStringOptions" minOccurs="0" type="xsd:string" />
         <xsd:element name="Query" type="xsd:string" />
         <xsd:element name="QueryTimeout" type="xsd:int" />
         <xsd:element name="NumSamples" type="xsd:int" />
@@ -181,6 +184,7 @@
                   <ServerName>$TemplateConfig/ServerName$</ServerName>
                   <DatabaseName>$TemplateConfig/DatabaseName$</DatabaseName>
                   <ProviderName>$TemplateConfig/ProviderName$</ProviderName>
+                  <ConnectionStringOptions>$TemplateConfig/ConnectionStringOptions$</ConnectionStringOptions>
                   <Query>$TemplateConfig/Query$</Query>
                   <OneRowPerItem>true</OneRowPerItem>
                   <QueryTimeout>$TemplateConfig/QueryTimeout$</QueryTimeout>
